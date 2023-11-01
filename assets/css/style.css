@@ -1,1 +1,10 @@
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
+
+:root {
+    --text: #f2f2f2;
+    --background: #26262c;
+    --primary: #5d37a4;
+    --secondary: #1b1b22;
+    --accent: #845fc4;
+}
+
