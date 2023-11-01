@@ -8,3 +8,18 @@
     --accent: #845fc4;
 }
 
+
+
+.image-container {
+    height: 75px;
+    display: flex;
+    justify-content: auto;
+    align-items: auto;
+}
+
+#luna-image{
+    max-width: auto;
+    max-height: auto;
+    display: block;
+    margin: 0 ;
+}
