@@ -2,13 +2,212 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Luna</title>
-<link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-    
-
     <script src="./assets/js/script.js"></script>
+
+    <!-- Header -->
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">LUNA</h1>
+            </div>
+        </div>
+    </section>
+    <section class="hero is-info">
+        <div class="hero-body">
+        </div>
+    </section>
+
+    <!-- Body -->
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+
+                <!-- Mini Calendar Section-->
+                <div class="column is-one-third">
+                    <div class="content is-normal">
+                </div>
+                </div>
+
+                <!-- Vertical Columns for Days-->
+                <div class="column">
+                    <h2 class="title">Day 1</h2>
+                    <button class="button" onclick="openForm('schedule-form')">Update Schedule</button>
+                    <button class="button" onclick="openForm('sleep-form')">Enter Sleep Hours</button>
+                </div>
+                           
+                <div class="column">
+                    <h2 class="title">Day 2</h2>
+                    <button class="button" onclick="openForm('schedule-form')">Update Schedule</button>
+                    <button class="button" onclick="openForm('sleep-form')">Enter Sleep Hours</button>
+                </div>
+
+                <div class="column">
+                    <h2 class="title">Day 3</h2>
+                    <button class="button" onclick="openForm('schedule-form')">Update Schedule</button>
+                    <button class="button" onclick="openForm('sleep-form')">Enter Sleep Hours</button>
+                </div>
+
+                <div class="column">
+                    <h2 class="title">Day 4</h2>
+                    <button class="button" onclick="openForm('schedule-form')">Update Schedule</button>
+                    <button class="button" onclick="openForm('sleep-form')">Enter Sleep Hours</button>
+                </div>
+
+                <div class="column">
+                    <h2 class="title">Day 5</h2>
+                    <button class="button" onclick="openForm('schedule-form')">Update Schedule</button>
+                    <button class="button" onclick="openForm('sleep-form')">Enter Sleep Hours</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--Modal Pop-up form for adding events-->
+    <div id="schedule-form" class="modal">
+        <!--Clicking off the form closes it-->
+       <div class="modal-background" onclick="closeForm('schedule-form')"></div> 
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Update Schedule</p>
+                <button class="delete" aria-label="close" onclick="closeForm('schedule-form')"></button>
+            </header>
+            <section class="modal-card-body">
+                <form>
+
+                    <!--Event dropdown-->
+                    <div class="field">
+                        <label class="label">Event Type</label>
+                        <div class="control">
+                            <div class="select">
+                                <select id="event-type">
+                                    <option>Select</option>
+                                    <option>Class</option>
+                                    <option>Work</option>
+                                    <option>Gym</option>
+                                    <option>Social</option>
+                                    <option>Misc.</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!--Time input-->
+                        <label class="label">Time</label>
+                        <div class="control">
+                            <div class="time">
+                                <input id="appt-time" type="time" name="appt-time" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--User inputted text for calendar event-->
+                    <div class="field">
+                        <label class="label">Message</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" id="message" placeholder="Enter Calendar Event">
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-calendar"></i>
+                              </span>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <!--Submit/cancel Form-->
+            <footer class="modal-card-foot">
+                <button class="button is-success" onclick="submitForm('schedule-form')">Submit</button>
+                <button class="button" onclick="closeForm('schedule-form')">Cancel</button>
+            </footer>
+        </div>
+    </div>
+
+<!--Sleep Form-->
+    <div id="sleep-form" class="modal">
+        <div class="modal-background" onclick="closeForm('sleep-form')"></div> 
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Enter Sleep Hours</p>
+                    <button class="delete" aria-label="close" onclick="closeForm('sleep-form')"></button>
+                </header>
+
+                <!--Sleep form body: Hours slept dropdown-->
+                <section class="modal-card-body">
+                     <form>
+                        <div class="field">
+                            <label class="label">Enter Hours Slept</label>
+                        <div class="control">
+                            <div class="select">
+                                <select id="sleep-hours">
+                                    <option>1 hour</option>
+                                    <option>2 hours</option>
+                                    <option>3 hours</option>
+                                    <option>4 hours</option>
+                                    <option>5 hours</option>
+                                    <option>6 hours.</option>
+                                    <option>7 hours</option>
+                                    <option>8 hours</option>
+                                    <option>9 hours</option>
+                                    <option>10 hours</option>
+                                    <option>11 hours</option>
+                                    <option>12 hours.</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </form>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-success" onclick="submitForm('sleep-form')">Submit</button>
+                    <button class="button" onclick="closeForm('sleep-form')">Cancel</button>
+                </footer>
+            </div>
+         </div>
+    </div>
+
+    <!--Script to open form-->
+    <script>
+        function openForm(formId) {
+            const formPopup = document.getElementById(formId);
+            formPopup.classList.add('is-active');
+        }
+    /* Close form*/
+        function closeForm(formId) {
+            const formPopup = document.getElementById(formId);
+            formPopup.classList.remove('is-active');
+        }
+    /* Submit form- takes in the responses and Alerts user of added event*/
+        function submitForm(formId) {
+            const eventType = document.getElementById('event-type').value;
+            const message = document.getElementById('message').value;
+            const eventTime = document.getElementById('appt-time').value;
+            const sleepHours = parseInt(document.getElementById('sleep-hours').value)
+
+            /* Create new div element to display submitted info in column */
+
+            /* Conditional for adding text content */
+
+            /* Get the corresponding day and append info */
+
+
+            /* Conditional statement to alert each input */
+            if(formId === 'schedule-form'){
+                alert(`${eventType} event added: ${message} at ${eventTime}`);
+            }else if(formId === 'sleep-form' && sleepHours >= 8){
+                alert(`You slept for ${sleepHours} hours this day! I'm sure that is plenty.`)
+            }else if(formId === 'sleep-form' && sleepHours < 8 && sleepHours > 1){
+                alert(`You slept for ${sleepHours} hours this day! Binge watching Netflix again?`)
+            }else if(formId === 'sleep-form' && sleepHours < 2){
+                alert(`You slept for ${sleepHours} hour this day... Not great.`)
+            }
+
+            closeForm(formId);
+        }
+    </script>
 </body>
 </html>
