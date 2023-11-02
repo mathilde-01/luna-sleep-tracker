@@ -1,5 +1,5 @@
-@import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Poiret+One&display=swap');
+
 
 :root {
 --text: #f2f2f2;
@@ -50,4 +50,39 @@ h3, h4, h5, p {
 
 #logo-container{
     margin-left: 0;
+}
+
+/* calendar styling */
+.datetimepicker.is-primary .datepicker-nav {
+    background: #26262c!important;
+    color: #fff;
+}
+
+.datepicker-body .datepicker-dates .datepicker-days .datepicker-date.date-item {
+    background-color: #26262c!important;
+    color: #fff;
+}
+
+.datetimepicker.is-primary .datepicker-body  .datepicker-date .date-item.is-today {
+    color: var(--primary)!important;
+    border: var(--primary)!important;
+}
+
+button.date-item.is-active {
+    background-color: #5d37a4!important;
+    color: white;
+}
+
+button.date-item.datepicker.date.is-current-month.datepicker-range {
+    background-color: #5d37a4!important;
+    color: white;
+}
+
+
+.has-text-danger {
+    color: var(--primary)!important;
+}
+
+.has-text-warning {
+    color: var(--accent)!important;
 }

@@ -3,7 +3,7 @@ console.log("connected");
 
 // Bulma calendar 
 // Initialize all input of type date
-var calendars = bulmaCalendar.attach('[type="date"]', options);
+var calendars = bulmaCalendar.attach('[type="date"]', {datePicker: "inline"});
 
 // Loop on each calendar initialized
 for(var i = 0; i < calendars.length; i++) {
