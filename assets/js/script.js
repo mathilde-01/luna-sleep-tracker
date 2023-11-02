@@ -59,6 +59,7 @@ if (element) {
         /* Get the corresponding day and append info */
 
         /* Conditional statement to alert each input */
+<<<<<<< HEAD
             if(formId === 'schedule-form'){
                 alert(`${eventType} event added: ${message} from ${beginEventTime} to ${endEventTime}`);
             }else if(formId === 'sleep-form' && sleepHours >= 8){
@@ -69,3 +70,38 @@ if (element) {
                 alert(`You slept for ${sleepHours} hour this day... Not great.`)
             }
     }
+=======
+        if(formId === 'schedule-form'){
+            alert(`${eventType} event added: ${message} at ${eventTime}`);
+        }else if(formId === 'sleep-form' && sleepHours >= 8){
+            alert(`You slept for ${sleepHours} hours this day! I'm sure that is plenty.`)
+        }else if(formId === 'sleep-form' && sleepHours < 8 && sleepHours > 1){
+            alert(`You slept for ${sleepHours} hours this day! Binge watching Netflix again?`)
+        }else if(formId === 'sleep-form' && sleepHours < 2){
+            alert(`You slept for ${sleepHours} hour this day... Not great.`)
+        }
+
+        closeForm(formId);
+    }
+
+
+
+// API script
+
+var userCity = "";
+
+function getCity(){
+	fetch('https://api.ipgeolocation.io/ipgeo?apiKey=a1d419df10e64b8e9710e164ca9b610b&fields=city')
+    .then(function (response) {
+        return(response.json())
+    })
+    // display their city and the current day using dayjs
+    .then(function (data) {
+		userCity = data.city;
+	})
+}
+
+function getMoonPhase(){
+
+}
+>>>>>>> f3b62b0b8b5f59113034316f11a3a7805b330ff6
