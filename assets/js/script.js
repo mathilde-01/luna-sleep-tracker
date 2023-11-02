@@ -24,9 +24,10 @@ if (element) {
 
 
 /*Script to open form*/
-    function openForm(formId) {
+    function openForm(formId, day) {
         const formPopup = document.getElementById(formId);
         formPopup.classList.add('is-active');
+        formPopup.setAttribute('data',`dayOffset:${day}`)
     }
 /* Close form*/
     function closeForm(formId) {
@@ -59,7 +60,6 @@ if (element) {
         /* Get the corresponding day and append info */
 
         /* Conditional statement to alert each input */
-<<<<<<< HEAD
             if(formId === 'schedule-form'){
                 alert(`${eventType} event added: ${message} from ${beginEventTime} to ${endEventTime}`);
             }else if(formId === 'sleep-form' && sleepHours >= 8){
@@ -69,19 +69,6 @@ if (element) {
             }else if(formId === 'sleep-form' && sleepHours < 2){
                 alert(`You slept for ${sleepHours} hour this day... Not great.`)
             }
-    }
-=======
-        if(formId === 'schedule-form'){
-            alert(`${eventType} event added: ${message} at ${eventTime}`);
-        }else if(formId === 'sleep-form' && sleepHours >= 8){
-            alert(`You slept for ${sleepHours} hours this day! I'm sure that is plenty.`)
-        }else if(formId === 'sleep-form' && sleepHours < 8 && sleepHours > 1){
-            alert(`You slept for ${sleepHours} hours this day! Binge watching Netflix again?`)
-        }else if(formId === 'sleep-form' && sleepHours < 2){
-            alert(`You slept for ${sleepHours} hour this day... Not great.`)
-        }
-
-        closeForm(formId);
     }
 
 
@@ -104,4 +91,3 @@ function getCity(){
 function getMoonPhase(){
 
 }
->>>>>>> f3b62b0b8b5f59113034316f11a3a7805b330ff6
