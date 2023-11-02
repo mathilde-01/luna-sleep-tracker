@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <link href="~bulma-calendar/dist/css/bulma-calendar.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bulma-calendar@6.1.19/dist/css/bulma-calendar.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Luna</title>
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
+
 <body>
     <!-- Header -->
     <header class="hero is-small">
         <div class="hero-body">
             <div class="container" id="logo-container">
                 <div class="image-container">
-                <img src="./assets/images/luna.png" alt="Luna Image" id="luna-image">
+                    <img src="./assets/images/luna.png" alt="Luna Image" id="luna-image">
                 </div>
             </div>
         </div>
@@ -29,8 +31,8 @@
                 <!-- Mini Calendar Section-->
                 <div class="column is-one-third">
                     <div class="content is-normal">
-                        <input type="date">
-                </div>
+                        <input type="date" color="black" data-display-mode="inline" data-is-range="true" data-close-on-select="false">
+                    </div>
                 </div>
 
                 <!-- Vertical Columns for Days-->
@@ -39,7 +41,7 @@
                     <button class="button" onclick="openForm('schedule-form')">Update Schedule</button>
                     <button class="button" onclick="openForm('sleep-form')">Enter Sleep Hours</button>
                 </div>
-                           
+
                 <div class="column">
                     <h2 class="title">Day 2</h2>
                     <button class="button" onclick="openForm('schedule-form')">Update Schedule</button>
@@ -70,7 +72,7 @@
     <!--Modal Pop-up form for adding events-->
     <div id="schedule-form" class="modal">
         <!--Clicking off the form closes it-->
-       <div class="modal-background" onclick="closeForm('schedule-form')"></div> 
+        <div class="modal-background" onclick="closeForm('schedule-form')"></div>
         <div class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title">Update Schedule</p>
@@ -111,7 +113,7 @@
                             <input class="input" type="text" id="message" placeholder="Enter Calendar Event">
                             <span class="icon is-small is-left">
                                 <i class="fa fa-calendar"></i>
-                              </span>
+                            </span>
                         </div>
                     </div>
                 </form>
@@ -125,20 +127,20 @@
         </div>
     </div>
 
-<!--Sleep Form-->
+    <!--Sleep Form-->
     <div id="sleep-form" class="modal">
-        <div class="modal-background" onclick="closeForm('sleep-form')"></div> 
-            <div class="modal-card">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Enter Sleep Hours</p>
-                    <button class="delete" aria-label="close" onclick="closeForm('sleep-form')"></button>
-                </header>
+        <div class="modal-background" onclick="closeForm('sleep-form')"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Enter Sleep Hours</p>
+                <button class="delete" aria-label="close" onclick="closeForm('sleep-form')"></button>
+            </header>
 
-                <!--Sleep form body: Hours slept dropdown-->
-                <section class="modal-card-body">
-                     <form>
-                        <div class="field">
-                            <label class="label">Enter Hours Slept</label>
+            <!--Sleep form body: Hours slept dropdown-->
+            <section class="modal-card-body">
+                <form>
+                    <div class="field">
+                        <label class="label">Enter Hours Slept</label>
                         <div class="control">
                             <div class="select">
                                 <select id="sleep-hours">
@@ -158,18 +160,20 @@
                             </div>
                         </div>
 
-                    </form>
-                </section>
-                <footer class="modal-card-foot">
-                    <button class="button is-success" onclick="submitForm('sleep-form')">Submit</button>
-                    <button class="button" onclick="closeForm('sleep-form')">Cancel</button>
-                </footer>
-            </div>
-         </div>
+                </form>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" onclick="submitForm('sleep-form')">Submit</button>
+                <button class="button" onclick="closeForm('sleep-form')">Cancel</button>
+            </footer>
+        </div>
+    </div>
     </div>
 
-    <script src="~bulma-calendar/dist/js/bulma-calendar.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>    
+
+    <script src="https://cdn.jsdelivr.net/npm/bulma-calendar@6.1.19/dist/js/bulma-calendar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
+
 </html>
