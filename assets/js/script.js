@@ -60,3 +60,24 @@ if (element) {
 
         closeForm(formId);
     }
+
+
+
+// API script
+
+var userCity = "";
+
+function getCity(){
+	fetch('https://api.ipgeolocation.io/ipgeo?apiKey=a1d419df10e64b8e9710e164ca9b610b&fields=city')
+    .then(function (response) {
+        return(response.json())
+    })
+    // display their city and the current day using dayjs
+    .then(function (data) {
+		userCity = data.city;
+	})
+}
+
+function getMoonPhase(){
+
+}
