@@ -2,6 +2,18 @@
 // Initialize all input of type date
 var calendars = bulmaCalendar.attach('[type="date"]', {datePicker: "inline"});
 
+var moonPhases = ["newMoon", "waxingCrescent", "firstQuarter", "waxingGibbous", "fullMoon", "waningGibbous", "thirdQuarter", "waningCrescent"]
+const moonImages = {
+    "firstQuarter" : "assets/images/moon-icons/first-quarter.png",
+    "fullMoon" : "assets/images/moon-icons/full-moon.png",
+    "thirdQuarter" : "assets/images/moon-icons/third-quarter.png",
+    "waningCrescent" : "assets/images/moon-icons/waning-crescent.png",
+    "waningGibbous" : "assets/images/moon-icons/waning-gibbous.png",
+    "waxingCrescent" : "assets/images/moon-icons/waxing-crescent.png",
+    "waxingGibbous" : "assets/images/moon-icons/waxing-gibbous.png",
+	"newMoon" : "assets/images/moon-icons/full-moon.png"
+}
+
 // Loop on each calendar initialized
 for(var i = 0; i < calendars.length; i++) {
 	// Add listener to select event
@@ -100,7 +112,7 @@ function getMoonPhase(city, date){
 			console.log(data.days[i].moonphase);
 			
 			if (i === 3) {
-				console.log("current phase");
+				console.log(Math.round((.5)*8)%8);
 			}
 		}
 		
@@ -123,13 +135,3 @@ function getCity(){
 }
 
 getCity();
-
-const moonImages = {
-    "firstQuarter" : "assets/images/moon-icons/first-quarter.png",
-    "fullMoon" : "assets/images/moon-icons/full-moon.png",
-    "thirdQuarter" : "assets/images/moon-icons/third-quarter.png",
-    "waningCrescent" : "assets/images/moon-icons/waning-crescent.png",
-    "waningGibbous" : "assets/images/moon-icons/waning-gibbous.png",
-    "waxingCrescent" : "assets/images/moon-icons/waxing-crescent.png",
-    "waxingGibbous" : "assets/images/moon-icons/waxing-gibbous.png"
-}
