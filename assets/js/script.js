@@ -1,6 +1,3 @@
-console.log("connected");
-
-
 // Bulma calendar 
 // Initialize all input of type date
 var calendars = bulmaCalendar.attach('[type="date"]', {datePicker: "inline"});
@@ -24,9 +21,10 @@ if (element) {
 
 
 /*Script to open form*/
-    function openForm(formId) {
+    function openForm(formId, day) {
         const formPopup = document.getElementById(formId);
         formPopup.classList.add('is-active');
+        formPopup.setAttribute('data-day-offset',day);
     }
 /* Close form*/
     function closeForm(formId) {
@@ -35,17 +33,43 @@ if (element) {
     }
 /* Submit form- takes in the responses and Alerts user of added event*/
     function submitForm(formId) {
+        const formPopup = document.getElementById(formId);
         const eventType = document.getElementById('event-type').value;
         const message = document.getElementById('message').value;
-        const eventTime = document.getElementById('appt-time').value;
+        const beginEventTime = document.getElementById('begin-time').value;
+        const endEventTime = document.getElementById('end-time').value;
+        const dayOffset = parseInt(formPopup.getAttribute('data-day-offset'))
         const sleepHours = parseInt(document.getElementById('sleep-hours').value)
+        if (eventType.value === "Select") {
+            alert("Please select an option before submitting.");
+            formId.preventDefault(); // Prevent the form from being submitted.
+        } else if (beginEventTime   === "") {
+            alert("Please select a start time before submitting.");
+            formId.preventDefault();
+        } else if (endEventTime   === "") {
+            alert("Please select a end time before submitting.");
+            formId.preventDefault();
+        } else {
+            closeForm(formId);
+        }
 
         /* Create new div element to display submitted info in column */
 
         /* Conditional for adding text content */
 
         /* Get the corresponding day and append info */
-
+        const rawDay = dayjs().add(dayOffset, 'day');
+        const formatedDay = dayjs(rawDay).format('YYYY-MM-DD');
+        const formateBeginTime = dayjs(formatedDay + beginEventTime).format('YYYY-MM-DD HH:mm');
+        const formatedEndTime = dayjs(formatedDay + endEventTime).format('YYYY-MM-DD HH:mm');
+        //const length =  
+        // [
+        //     {
+        //         "startHours": [],
+        //         "endHours": [],
+        //         "length": []
+        //     }
+        // ]
 
         /* Conditional statement to alert each input */
         if(formId === 'schedule-form'){
@@ -57,8 +81,6 @@ if (element) {
         }else if(formId === 'sleep-form' && sleepHours < 2){
             alert(`You slept for ${sleepHours} hour this day... Not great.`)
         }
-
-        closeForm(formId);
     }
 
 

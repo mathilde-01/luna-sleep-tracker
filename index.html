@@ -17,7 +17,7 @@
         <div class="hero-body">
             <div class="container" id="logo-container">
                 <div class="image-container">
-                    <img src="./assets/images/luna.png" alt="Luna Image" id="luna-image">
+                <img src="./assets/images/luna.png" alt="Luna Image" id="luna-image">
                 </div>
             </div>
         </div>
@@ -32,38 +32,38 @@
                 <div class="column is-one-third">
                     <div class="content is-normal">
                         <input type="date" color="black" data-display-mode="inline" data-is-range="true" data-close-on-select="false">
-                    </div>
+                </div>
                 </div>
 
                 <!-- Vertical Columns for Days-->
                 <div class="column">
-                    <h2 class="title">Day 1</h2>
-                    <button class="button" onclick="openForm('schedule-form')">Update Schedule</button>
-                    <button class="button" onclick="openForm('sleep-form')">Enter Sleep Hours</button>
+                    <h2 class="title">3 Days Ago</h2>
+                    <button class="button" onclick="openForm('schedule-form',-3)">Update Schedule</button>
+                    <button class="button" onclick="openForm('sleep-form',-3)">Enter Sleep Hours</button>
+                </div>
+                           
+                <div class="column">
+                    <h2 class="title">2 Days Ago</h2>
+                    <button class="button" onclick="openForm('schedule-form',-2)">Update Schedule</button>
+                    <button class="button" onclick="openForm('sleep-form',-2)">Enter Sleep Hours</button>
                 </div>
 
                 <div class="column">
-                    <h2 class="title">Day 2</h2>
-                    <button class="button" onclick="openForm('schedule-form')">Update Schedule</button>
-                    <button class="button" onclick="openForm('sleep-form')">Enter Sleep Hours</button>
+                    <h2 class="title">Yesterday</h2>
+                    <button class="button" onclick="openForm('schedule-form',-1)">Update Schedule</button>
+                    <button class="button" onclick="openForm('sleep-form',-1)">Enter Sleep Hours</button>
                 </div>
 
                 <div class="column">
-                    <h2 class="title">Day 3</h2>
-                    <button class="button" onclick="openForm('schedule-form')">Update Schedule</button>
-                    <button class="button" onclick="openForm('sleep-form')">Enter Sleep Hours</button>
+                    <h2 class="title">Today</h2>
+                    <button class="button" onclick="openForm('schedule-form',0)">Update Schedule</button>
+                    <button class="button" onclick="openForm('sleep-form',0)">Enter Sleep Hours</button>
                 </div>
 
                 <div class="column">
-                    <h2 class="title">Day 4</h2>
-                    <button class="button" onclick="openForm('schedule-form')">Update Schedule</button>
-                    <button class="button" onclick="openForm('sleep-form')">Enter Sleep Hours</button>
-                </div>
-
-                <div class="column">
-                    <h2 class="title">Day 5</h2>
-                    <button class="button" onclick="openForm('schedule-form')">Update Schedule</button>
-                    <button class="button" onclick="openForm('sleep-form')">Enter Sleep Hours</button>
+                    <h2 class="title">Tomorrow</h2>
+                    <button class="button" onclick="openForm('schedule-form',1)">Update Schedule</button>
+                    <button class="button" onclick="openForm('sleep-form',1)">Enter Sleep Hours</button>
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
     <!--Modal Pop-up form for adding events-->
     <div id="schedule-form" class="modal">
         <!--Clicking off the form closes it-->
-        <div class="modal-background" onclick="closeForm('schedule-form')"></div>
+       <div class="modal-background" onclick="closeForm('schedule-form')"></div> 
         <div class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title">Update Schedule</p>
@@ -100,8 +100,11 @@
                         <!--Time input-->
                         <label class="label">Time</label>
                         <div class="control">
-                            <div class="time">
-                                <input id="appt-time" type="time" name="appt-time" />
+                            <div class="time"> <!--The Color is set here as a temperart fix and should be replaced-->
+                                <p style="color:black;">Start Time:</p> 
+                                <input id="begin-time" type="time" name="begin-time" />
+                                <p style="color:black;">End Time:</p>
+                                <input id="end-time" type="time" name="end-time" />
                             </div>
                         </div>
                     </div>
@@ -113,7 +116,7 @@
                             <input class="input" type="text" id="message" placeholder="Enter Calendar Event">
                             <span class="icon is-small is-left">
                                 <i class="fa fa-calendar"></i>
-                            </span>
+                              </span>
                         </div>
                     </div>
                 </form>
@@ -127,20 +130,20 @@
         </div>
     </div>
 
-    <!--Sleep Form-->
+<!--Sleep Form-->
     <div id="sleep-form" class="modal">
-        <div class="modal-background" onclick="closeForm('sleep-form')"></div>
-        <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">Enter Sleep Hours</p>
-                <button class="delete" aria-label="close" onclick="closeForm('sleep-form')"></button>
-            </header>
+        <div class="modal-background" onclick="closeForm('sleep-form')"></div> 
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Enter Sleep Hours</p>
+                    <button class="delete" aria-label="close" onclick="closeForm('sleep-form')"></button>
+                </header>
 
-            <!--Sleep form body: Hours slept dropdown-->
-            <section class="modal-card-body">
-                <form>
-                    <div class="field">
-                        <label class="label">Enter Hours Slept</label>
+                <!--Sleep form body: Hours slept dropdown-->
+                <section class="modal-card-body">
+                     <form>
+                        <div class="field">
+                            <label class="label">Enter Hours Slept</label>
                         <div class="control">
                             <div class="select">
                                 <select id="sleep-hours">
@@ -160,19 +163,19 @@
                             </div>
                         </div>
 
-                </form>
-            </section>
-            <footer class="modal-card-foot">
-                <button class="button is-success" onclick="submitForm('sleep-form')">Submit</button>
-                <button class="button" onclick="closeForm('sleep-form')">Cancel</button>
-            </footer>
-        </div>
-    </div>
+                    </form>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-success" onclick="submitForm('sleep-form')">Submit</button>
+                    <button class="button" onclick="closeForm('sleep-form')">Cancel</button>
+                </footer>
+            </div>
+         </div>
     </div>
 
-
+    
     <script src="https://cdn.jsdelivr.net/npm/bulma-calendar@6.1.19/dist/js/bulma-calendar.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>    
     <script src="./assets/js/script.js"></script>
 </body>
 
