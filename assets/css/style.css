@@ -64,8 +64,35 @@ h3, h4, h5, p {
 }
 
 .datetimepicker.is-primary .datepicker-body  .datepicker-date .date-item.is-today {
-    color: var(--primary)!important;
-    border: var(--primary)!important;
+    color: var(--primary)!important;    
+    border: 2px dotted  #5d37a4;
+    border-color:  #5d37a4!important;  
+}
+
+/* button.date-item:hover { 
+    border-color:  #5d37a4; 
+} */
+
+.datepicker-range {
+    background-color: #5d37a4!important;
+    color: white;
+}
+
+.datetimepicker.is-primary .datepicker-body .datepicker-dates .datepicker-days .datepicker-date.datepicker-range .date-item {
+    background-color: #845fc4!important;  
+}
+
+.datetimepicker.is-primary .datepicker-body .datepicker-dates .datepicker-days .datepicker-date.datepicker-range.datepicker-range-end .date-item {
+    border-color: white;
+    color: white;
+}
+
+.datetimepicker-selection-day {
+    color: var(--primary)!important; 
+}
+
+.datepicker-dates.date-item-selection.isactive {
+    background-color: #5d37a4!important;
 }
 
 button.date-item.is-active {
