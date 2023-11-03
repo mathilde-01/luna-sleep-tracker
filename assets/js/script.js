@@ -2,17 +2,18 @@
 // Initialize all input of type date
 var calendars = bulmaCalendar.attach('[type="date"]', {datePicker: "inline"});
 
-var moonPhases = ["newMoon", "waxingCrescent", "firstQuarter", "waxingGibbous", "fullMoon", "waningGibbous", "thirdQuarter", "waningCrescent"]
 const moonImages = {
-    "firstQuarter" : "assets/images/moon-icons/first-quarter.png",
-    "fullMoon" : "assets/images/moon-icons/full-moon.png",
-    "thirdQuarter" : "assets/images/moon-icons/third-quarter.png",
-    "waningCrescent" : "assets/images/moon-icons/waning-crescent.png",
-    "waningGibbous" : "assets/images/moon-icons/waning-gibbous.png",
-    "waxingCrescent" : "assets/images/moon-icons/waxing-crescent.png",
-    "waxingGibbous" : "assets/images/moon-icons/waxing-gibbous.png",
-	"newMoon" : "assets/images/moon-icons/full-moon.png"
+    firstQuarter : "assets/images/moon-icons/first-quarter.png",
+    fullMoon : "assets/images/moon-icons/full-moon.png",
+    thirdQuarter : "assets/images/moon-icons/third-quarter.png",
+    waningCrescent : "assets/images/moon-icons/waning-crescent.png",
+    waningGibbous : "assets/images/moon-icons/waning-gibbous.png",
+    waxingCrescent : "assets/images/moon-icons/waxing-crescent.png",
+    waxingGibbous : "assets/images/moon-icons/waxing-gibbous.png",
+	newMoon : "assets/images/moon-icons/full-moon.png"
 }
+
+var moonPhases = ["newMoon", "waxingCrescent", "firstQuarter", "waxingGibbous", "fullMoon", "waningGibbous", "thirdQuarter", "waningCrescent"];
 
 // Loop on each calendar initialized
 for(var i = 0; i < calendars.length; i++) {
@@ -109,10 +110,32 @@ function getMoonPhase(city, date){
     // display their city and the current day using dayjs
     .then(function (data) {
 		for (i = 0; i < 7; i++){
-			console.log(data.days[i].moonphase);
+			var moonPhaseData = data.days[i].moonphase;
+			console.log(moonPhaseData);
+
+			if (moonPhaseData <= .5){
+				var phasePercent = moonPhaseData*200;
+			} else {
+				var phasePercent = 200*((moonPhaseData) - (moonPhaseData*2 - 1))
+			}
 			
 			if (i === 3) {
-				console.log(Math.round((.5)*8)%8);
+				var  moonIndex = Math.round((moonPhaseData)*8)%8;
+
+				var logoContainerEl = $('#logo-container');
+				var moonIconEl = $('<img>');
+
+				moonIconEl.attr("src", moonImages[moonPhases[moonIndex]]);
+				moonIconEl.css("max-height", "30px");
+
+				logoContainerEl.append(moonIconEl);
+
+				$('#info-text').text("On " + dayjs(date).format("MMMM D, YYYY") + " in " + city + ", the moon is " + phasePercent + "% illuminated.");
+
+				if (phasePercent >= 70) {
+					$('#info-text').append(" Close your blinds tonight!")
+				}
+
 			}
 		}
 		
@@ -130,6 +153,7 @@ function getCity(){
     .then(function (data) {
 		// get the moon phase using the city they're in and the current time
 		var date = dayjs().format("YYYY-MM-DD");
+
 		getMoonPhase(data.city, date);
 	})
 }
