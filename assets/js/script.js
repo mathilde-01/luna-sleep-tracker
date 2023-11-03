@@ -1,6 +1,3 @@
-console.log("connected");
-
-
 // Bulma calendar 
 // Initialize all input of type date
 var calendars = bulmaCalendar.attach('[type="date"]', {datePicker: "inline"});
@@ -27,7 +24,7 @@ if (element) {
     function openForm(formId, day) {
         const formPopup = document.getElementById(formId);
         formPopup.classList.add('is-active');
-        formPopup.setAttribute('data',`dayOffset:${day}`)
+        formPopup.setAttribute('data-day-offset',day);
     }
 /* Close form*/
     function closeForm(formId) {
@@ -36,10 +33,12 @@ if (element) {
     }
 /* Submit form- takes in the responses and Alerts user of added event*/
     function submitForm(formId) {
+        const formPopup = document.getElementById(formId);
         const eventType = document.getElementById('event-type').value;
         const message = document.getElementById('message').value;
         const beginEventTime = document.getElementById('begin-time').value;
         const endEventTime = document.getElementById('end-time').value;
+        const dayOffset = parseInt(formPopup.getAttribute('data-day-offset'))
         const sleepHours = parseInt(document.getElementById('sleep-hours').value)
         if (eventType.value === "Select") {
             alert("Please select an option before submitting.");
@@ -53,18 +52,31 @@ if (element) {
         } else {
             closeForm(formId);
         }
+
         /* Create new div element to display submitted info in column */
 
         /* Conditional for adding text content */
 
         /* Get the corresponding day and append info */
+        const rawDay = dayjs().add(dayOffset, 'day');
+        const formatedDay = dayjs(rawDay).format('YYYY-MM-DD');
+        const formateBeginTime = dayjs(formatedDay + beginEventTime).format('YYYY-MM-DD HH:mm');
+        const formatedEndTime = dayjs(formatedDay + endEventTime).format('YYYY-MM-DD HH:mm');
+        //const length =  
+        // [
+        //     {
+        //         "startHours": [],
+        //         "endHours": [],
+        //         "length": []
+        //     }
+        // ]
 
         /* Conditional statement to alert each input */
             if(formId === 'schedule-form'){
                 alert(`${eventType} event added: ${message} from ${beginEventTime} to ${endEventTime}`);
-            }else if(formId === 'sleep-form' && sleepHours >= 8){
+            }else if(formId === 'sleep-form' && sleepHours >= 6){
                 alert(`You slept for ${sleepHours} hours this day! I'm sure that is plenty.`)
-            }else if(formId === 'sleep-form' && sleepHours < 8 && sleepHours > 1){
+            }else if(formId === 'sleep-form' && sleepHours < 6 && sleepHours > 1){
                 alert(`You slept for ${sleepHours} hours this day! Binge watching Netflix again?`)
             }else if(formId === 'sleep-form' && sleepHours < 2){
                 alert(`You slept for ${sleepHours} hour this day... Not great.`)
