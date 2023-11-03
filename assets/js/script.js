@@ -123,3 +123,13 @@ function getCity(){
 }
 
 getCity();
+
+const moonImages = {
+    "firstQuarter" : "assets/images/moon-icons/first-quarter.png",
+    "fullMoon" : "assets/images/moon-icons/full-moon.png",
+    "thirdQuarter" : "assets/images/moon-icons/third-quarter.png",
+    "waningCrescent" : "assets/images/moon-icons/waning-crescent.png",
+    "waningGibbous" : "assets/images/moon-icons/waning-gibbous.png",
+    "waxingCrescent" : "assets/images/moon-icons/waxing-crescent.png",
+    "waxingGibbous" : "assets/images/moon-icons/waxing-gibbous.png"
+}
