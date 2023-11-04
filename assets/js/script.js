@@ -32,11 +32,24 @@ if (element) {
 	});
 }
 
-// Autoselect 2 days before & 3 days after when a date is selected
-// var calendarSelection = document.querySelector('.date-item.is-active.is-date')
-// if (calendars[i] == 'select') {
-//     datepicker-range.style.display;
-// }
+
+const datePicker = new bulmaCalendar(document.getElementById('date-picker'), {
+    startDate: new Date(),
+    dateFormat: 'YYYY-MM-DD',
+    displayMode: 'dialog',
+});
+
+datePicker.on('select', datepicker => {
+    // Get the selected date
+    const selectedDate = datepicker.data.value();
+
+    // Calculate 2 days before the selected date
+    const twoDaysBefore = new Date(selectedDate);
+    twoDaysBefore.setDate(twoDaysBefore.getDate() - 2);
+
+    // Set the date range in the input field
+    datepicker.data.range([twoDaysBefore, selectedDate]);
+});
 
 
 /*Script to open form*/
