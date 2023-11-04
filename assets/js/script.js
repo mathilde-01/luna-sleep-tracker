@@ -32,6 +32,12 @@ if (element) {
 	});
 }
 
+// Autoselect 2 days before & 3 days after when a date is selected
+// var calendarSelection = document.querySelector('.date-item.is-active.is-date')
+// if (calendars[i] == 'select') {
+//     datepicker-range.style.display;
+// }
+
 
 /*Script to open form*/
     function openForm(formId, day) {
