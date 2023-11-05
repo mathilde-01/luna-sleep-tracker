@@ -90,7 +90,6 @@ if (element) {
         const formateBeginTime = dayjs(formatedDay + beginEventTime).format('YYYY-MM-DD HH:mm');
         const formatedEndTime = dayjs(formatedDay + endEventTime).format('YYYY-MM-DD HH:mm');
         const length =  dayjs(formatedEndTime).diff(dayjs(formateBeginTime), 'minute');
-        console.log(length);
         
         // [
         //     {
@@ -126,8 +125,8 @@ function getMoonPhase(city, date){
 
 	var dateRangeMin = dayjs(date).subtract(3, "day").format("YYYY-MM-DD");
 	var dateRangeMax = dayjs(date).add(3, "day").format("YYYY-MM-DD");
-
-	fetch('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/' + city + '/' + dateRangeMin + '/' + dateRangeMax + '?unitGroup=us&elements=moonphase&include=current&key=Z6C7FPXUVA9JACX4YZ6VGQPPK&contentType=json')
+    var weatherApiKey = 'Z6C7FPXUVA9JACX4YZ6VGQPPK';
+	fetch('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/' + city + '/' + dateRangeMin + '/' + dateRangeMax + '?unitGroup=us&elements=moonphase&include=current&key=' + weatherApiKey + '&contentType=json')
     .then(function (response) {
         return(response.json())
     })
@@ -182,4 +181,4 @@ function getCity(){
 	})
 }
 
-//getCity();
+getCity();
