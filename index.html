@@ -145,23 +145,13 @@
                 <section class="modal-card-body">
                      <form>
                         <div class="field">
-                            <label class="label">Enter Hours Slept</label>
+                            <label class="label">Enter When You Slept</label>
                         <div class="control">
-                            <div class="select">
-                                <select id="sleep-hours">
-                                    <option>1 hour</option>
-                                    <option>2 hours</option>
-                                    <option>3 hours</option>
-                                    <option>4 hours</option>
-                                    <option>5 hours</option>
-                                    <option>6 hours.</option>
-                                    <option>7 hours</option>
-                                    <option>8 hours</option>
-                                    <option>9 hours</option>
-                                    <option>10 hours</option>
-                                    <option>11 hours</option>
-                                    <option>12 hours.</option>
-                                </select>
+                            <div class="time"> <!--The Color is set here as a temperart fix and should be replaced-->
+                                <p style="color:black;">Fell Asleep:</p> 
+                                <input id="fell-asleep" type="time" name="fell-asleep" />
+                                <p style="color:black;">Woke Up:</p>
+                                <input id="woke-up" type="time" name="woke-up" />
                             </div>
                         </div>
 

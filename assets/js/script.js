@@ -63,64 +63,56 @@ function closeForm(formId) {
   formPopup.classList.remove("is-active");
 }
 /* Submit form- takes in the responses and Alerts user of added event*/
-function submitForm(formId) {
-  const formPopup = document.getElementById(formId);
-  const eventType = document.getElementById("event-type").value;
-  const message = document.getElementById("message").value;
-  const beginEventTime = document.getElementById("begin-time").value;
-  const endEventTime = document.getElementById("end-time").value;
-  const dayOffset = parseInt(formPopup.getAttribute("data-day-offset"));
-  const sleepHours = parseInt(document.getElementById("sleep-hours").value);
-  if (eventType.value === "Select") {
-    alert("Please select an option before submitting.");
-    formId.preventDefault(); // Prevent the form from being submitted.
-  } else if (beginEventTime === "") {
-    alert("Please select a start time before submitting.");
-    formId.preventDefault();
-  } else if (endEventTime === "") {
-    alert("Please select a end time before submitting.");
-    formId.preventDefault();
-  } else {
-    closeForm(formId);
-  }
+    function submitForm(formId) {
+        const formPopup = document.getElementById(formId);
+        const eventType = document.getElementById('event-type').value;
+        const message = document.getElementById('message').value;
+        const beginEventTime = document.getElementById('begin-time').value;
+        const endEventTime = document.getElementById('end-time').value;
+        const dayOffset = parseInt(formPopup.getAttribute('data-day-offset'))
+        const sleepHours = parseInt(document.getElementById('sleep-hours').value)
+        if (eventType.value === "Select") {
+            alert("Please select an option before submitting.");
+            formId.preventDefault(); // Prevent the form from being submitted.
+        } else if (beginEventTime   === "") {
+            alert("Please select a start time before submitting.");
+            formId.preventDefault();
+        } else if (endEventTime   === "") {
+            alert("Please select a end time before submitting.");
+            formId.preventDefault();
+        } else {
+            closeForm(formId);
+        }
 
   /* Create new div element to display submitted info in column */
 
   /* Conditional for adding text content */
 
-  /* Get the corresponding day and append info */
-  const rawDay = dayjs().add(dayOffset, "day");
-  const formatedDay = dayjs(rawDay).format("YYYY-MM-DD");
-  const formateBeginTime = dayjs(formatedDay + beginEventTime).format(
-    "YYYY-MM-DD HH:mm"
-  );
-  const formatedEndTime = dayjs(formatedDay + endEventTime).format(
-    "YYYY-MM-DD HH:mm"
-  );
-  //const length =
-  // [
-  //     {
-  //         "startHours": [],
-  //         "endHours": [],
-  //         "length": []
-  //     }
-  // ]
+        /* Get the corresponding day and append info */
+        const rawDay = dayjs().add(dayOffset, 'day');
+        const formatedDay = dayjs(rawDay).format('YYYY-MM-DD');
+        const formateBeginTime = dayjs(formatedDay + beginEventTime).format('YYYY-MM-DD HH:mm');
+        const formatedEndTime = dayjs(formatedDay + endEventTime).format('YYYY-MM-DD HH:mm');
+        //const length =  
+        // [
+        //     {
+        //         "startHours": [],
+        //         "endHours": [],
+        //         "length": []
+        //     }
+        // ]
 
-  /* Conditional statement to alert each input */
-  if (formId === "schedule-form") {
-    alert(`${eventType} event added: ${message} at ${eventTime}`);
-  } else if (formId === "sleep-form" && sleepHours >= 8) {
-    alert(
-      `You slept for ${sleepHours} hours this day! I'm sure that is plenty.`
-    );
-  } else if (formId === "sleep-form" && sleepHours < 8 && sleepHours > 1) {
-    alert(
-      `You slept for ${sleepHours} hours this day! Binge watching Netflix again?`
-    );
-  } else if (formId === "sleep-form" && sleepHours < 2) {
-    alert(`You slept for ${sleepHours} hour this day... Not great.`);
-  }
-}
+        /* Conditional statement to alert each input */
+        if(formId === 'schedule-form'){
+            alert(`${eventType} event added: ${message} at ${eventTime}`);
+        }else if(formId === 'sleep-form' && sleepHours >= 8){
+            alert(`You slept for ${sleepHours} hours this day! I'm sure that is plenty.`)
+        }else if(formId === 'sleep-form' && sleepHours < 8 && sleepHours > 1){
+            alert(`You slept for ${sleepHours} hours this day! Binge watching Netflix again?`)
+        }else if(formId === 'sleep-form' && sleepHours < 2){
+            alert(`You slept for ${sleepHours} hour this day... Not great.`)
+        }
+    }
 
 // get the moon phase using city name and time
 function getMoonPhase(city, date) {
