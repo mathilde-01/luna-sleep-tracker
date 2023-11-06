@@ -185,3 +185,31 @@ function getCity() {
 }
 
 getCity();
+
+
+/* Function to update day titles to selected day*/
+function updateDayTitles(selectedDate) {
+    const dayTitlesContainer = document.getElementById("day-titles-container");
+
+    if (dayTitlesContainer) {
+        // Clear the existing day titles
+        dayTitlesContainer.innerHTML = "";
+
+        // Calculate and set the day titles
+        for (let i = -3; i <= 3; i++) {
+            const day = selectedDate.add(i, 'day');
+            const dayOfWeek = day.format("dddd");
+            const date = day.format('MM/DD');
+            const column = document.createElement("div");
+            column.classList.add("column");
+            column.innerHTML = `<h2 class="title">${dayOfWeek} ${date}</h2>`;
+            dayTitlesContainer.appendChild(column);
+        }
+    }
+}
+// Initial update of day titles with the current date
+updateDayTitles(dayjs());
+
+
+
+
