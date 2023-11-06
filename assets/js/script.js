@@ -32,6 +32,12 @@ if (element) {
 	});
 }
 
+// Autoselect 2 days before & 3 days after when a date is selected
+// var calendarSelection = document.querySelector('.date-item.is-active.is-date')
+// if (calendars[i] == 'select') {
+//     datepicker-range.style.display;
+// }
+
 
 /*Script to open form*/
     function openForm(formId, day) {
@@ -47,12 +53,20 @@ if (element) {
 /* Submit form- takes in the responses and Alerts user of added event*/
     function submitForm(formId) {
         const formPopup = document.getElementById(formId);
-        const eventType = document.getElementById('event-type').value;
         const message = document.getElementById('message').value;
-        const beginEventTime = document.getElementById('begin-time').value;
-        const endEventTime = document.getElementById('end-time').value;
+        var eventType;
+        var beginEventTime;
+        var endEventTime;
+        if (formId == 'sleep-form') {
+            eventType = 'sleep';
+            beginEventTime = document.getElementById('fell-asleep').value;
+            endEventTime = document.getElementById('woke-up').value;
+        } else {
+            eventType = document.getElementById('event-type').value;
+            beginEventTime = document.getElementById('begin-time').value;
+            endEventTime = document.getElementById('end-time').value;
+        }
         const dayOffset = parseInt(formPopup.getAttribute('data-day-offset'))
-        const sleepHours = parseInt(document.getElementById('sleep-hours').value)
         if (eventType.value === "Select") {
             alert("Please select an option before submitting.");
             formId.preventDefault(); // Prevent the form from being submitted.
@@ -75,25 +89,34 @@ if (element) {
         const formatedDay = dayjs(rawDay).format('YYYY-MM-DD');
         const formateBeginTime = dayjs(formatedDay + beginEventTime).format('YYYY-MM-DD HH:mm');
         const formatedEndTime = dayjs(formatedDay + endEventTime).format('YYYY-MM-DD HH:mm');
-        //const length =  
+        const length =  dayjs(formatedEndTime).diff(dayjs(formateBeginTime), 'minute');
+        
         // [
         //     {
-        //         "startHours": [],
-        //         "endHours": [],
-        //         "length": []
+        //         "eventType": ,
+        //         "startHours": ,
+        //         "endHours": ,
+        //         "length": 
         //     }
         // ]
 
         /* Conditional statement to alert each input */
         if(formId === 'schedule-form'){
-            alert(`${eventType} event added: ${message} at ${eventTime}`);
-        }else if(formId === 'sleep-form' && sleepHours >= 8){
-            alert(`You slept for ${sleepHours} hours this day! I'm sure that is plenty.`)
-        }else if(formId === 'sleep-form' && sleepHours < 8 && sleepHours > 1){
-            alert(`You slept for ${sleepHours} hours this day! Binge watching Netflix again?`)
-        }else if(formId === 'sleep-form' && sleepHours < 2){
-            alert(`You slept for ${sleepHours} hour this day... Not great.`)
+            alert(`${eventType} event added: ${message} from ${dayjs(formateBeginTime).format('h:mm a')} to ${dayjs(formatedEndTime).format('h:mm a')}`);
+        }else if(formId === 'sleep-form' && length/60 >= 8){
+            alert(`You slept for ${Math.floor(length/60)} hours and ${length % 60} minutes this day! I'm sure that is plenty.`)
+        }else if(formId === 'sleep-form' && length/60 < 8 && length/60 >= 6){
+            alert(`You slept for ${Math.floor(length/60)} hours and ${length % 60} minutes this day! That's an alright amount.`)
+        }else if(formId === 'sleep-form' && length/60 < 6 && length/60 >= 2){
+            alert(`You slept for ${Math.floor(length/60)} hours and ${length % 60} minutes this day! Binge watching Netflix again?`)
+        }else if(formId === 'sleep-form' && length/60 < 2 && length/60 >= 1){
+            alert(`You slept for ${Math.floor(length/60)} hour and ${length % 60} minutes this day... That's... not great.`)
+        }else if(formId === 'sleep-form' && length/60 < 1){
+            alert(`You slept for ${length % 60} minutes this day... That's not even an hour of sleep!`)
         }
+
+        
+        
     }
 
 
@@ -102,8 +125,8 @@ function getMoonPhase(city, date){
 
 	var dateRangeMin = dayjs(date).subtract(3, "day").format("YYYY-MM-DD");
 	var dateRangeMax = dayjs(date).add(3, "day").format("YYYY-MM-DD");
-
-	fetch('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/' + city + '/' + dateRangeMin + '/' + dateRangeMax + '?unitGroup=us&elements=moonphase&include=current&key=Z6C7FPXUVA9JACX4YZ6VGQPPK&contentType=json')
+    var weatherApiKey = 'Z6C7FPXUVA9JACX4YZ6VGQPPK';
+	fetch('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/' + city + '/' + dateRangeMin + '/' + dateRangeMax + '?unitGroup=us&elements=moonphase&include=current&key=' + weatherApiKey + '&contentType=json')
     .then(function (response) {
         return(response.json())
     })
