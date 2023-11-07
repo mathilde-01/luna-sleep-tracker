@@ -20,6 +20,7 @@ for(var i = 0; i < calendars.length; i++) {
 	// Add listener to select event
 	calendars[i].on('select', date => {
 		console.log(date);
+
 	});
 }
 
@@ -185,12 +186,25 @@ getCity();
 
 
 /* Function to update day titles to selected day*/
-function updateDayTitles(selectedDate) {
+function updateDayTitles(selectedDate, selectedEndDate) {
     const dayTitlesContainer = document.getElementById("day-titles-container");
 
     if (dayTitlesContainer) {
         // Clear the existing day titles
         dayTitlesContainer.innerHTML = "";
+        // For date range
+        var currentDate = selectedDate;
+        if (selectedEndDate) {
+            while(currentDate.isSameOrBefore(selectedEndDate)) {
+            var dayOfWeek = currentDate.format("dddd");
+            var date = currentDate.format('MM/DD');
+            var column = document.createElement("div");
+            column.classList.add("column");
+            column.innerHTML = `<h2 class="title">${dayOfWeek} ${date},</h2>`;
+            dayTitlesContainer.appendChild(column);
+            currentDate = currentDate.add(1, 'day');
+            }
+        } else{
 
         // Calculate and set the day titles
         for (let i = -3; i <= 3; i++) {
@@ -198,12 +212,32 @@ function updateDayTitles(selectedDate) {
             const dayOfWeek = day.format("dddd");
             const date = day.format('MM/DD');
             const column = document.createElement("div");
-            column.classList.add("column");
+            column.classList.add("column", "initial-days"); //added class to use in hide function
             column.innerHTML = `<h2 class="title">${dayOfWeek} ${date}</h2>`;
             dayTitlesContainer.appendChild(column);
         }
     }
 }
+}
+
+
+/* Function to hide the current  days of week */
+function hideInitialDays() {
+    var initialDays = document.querySelectorAll(".initial-days")
+    for (var i = 0; i < initialDays.length; i++) {
+        initialDays[i].style.display = "none";
+    }
+}
+
+
+/* Event listener for selecting dates on bulma calendar */
+for (var i = 0; i < calendars.length; i++){
+    calendars[i].on('select', function () {
+        hideInitialDays();
+
+    });
+}
+
 // Initial update of day titles with the current date
 updateDayTitles(dayjs());
 
