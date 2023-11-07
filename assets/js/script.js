@@ -225,7 +225,7 @@ function updateDayTitles(selectedDate) {
         
         dayOfWeek.text(day.format("ddd").toUpperCase());
         date.text(day.format("D"));
-        columnEl.addClass("column");
+        columnEl.addClass("column p-0");
 
         columnEl.append(dayOfWeek);
         columnEl.append(date);

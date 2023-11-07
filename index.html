@@ -32,18 +32,18 @@
             <div class="columns" id="main-row">
 
                 <!-- Mini Calendar Section-->
-                <div class="column is-one-third">
-                    <div class="content is-normal">
+                <div class="column" id="right-side">
+                    <div class="content is-normal is-flex-touch is-flex-desktop-only is-justify-content-center">
                         <input type="date" color="black" data-display-mode="inline" data-is-range="true"
                             data-close-on-select="false">
                     </div>
-                    <div class="content">
+                    <div class="content is-flex-touch is-flex-desktop-only is-flex-direction-column">
                         <button class="button" onclick="openForm('schedule-form')">Update Schedule</button>
                         <button class="button" onclick="openForm('sleep-form')">Enter Sleep Hours</button>
                     </div>
                 </div>
                 <!-- Vertical Columns for Days-->
-                <div class="columns" id="day-titles-container">
+                <div class="columns m-0" id="day-titles-container">
                 </div>
             </div>
         </div>
