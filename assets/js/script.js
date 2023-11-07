@@ -1,6 +1,7 @@
 // Bulma calendar
 // Initialize all input of type date
 var calendars = bulmaCalendar.attach('[type="date"]', { datePicker: "inline" });
+var 
 
 const moonImages = {
   firstQuarter: "assets/images/moon-icons/first-quarter.png",
@@ -65,12 +66,17 @@ function closeForm(formId) {
 /* Submit form- takes in the responses and Alerts user of added event*/
     function submitForm(formId) {
         const formPopup = document.getElementById(formId);
-        const eventType = document.getElementById('event-type').value;
         const message = document.getElementById('message').value;
-        const beginEventTime = document.getElementById('begin-time').value;
-        const endEventTime = document.getElementById('end-time').value;
-        const dayOffset = parseInt(formPopup.getAttribute('data-day-offset'))
-        const sleepHours = parseInt(document.getElementById('sleep-hours').value)
+        const dayOffset = parseInt(formPopup.getAttribute('data-day-offset'));
+        var eventType = document.getElementById('event-type').value;
+        var beginEventTime = document.getElementById('begin-time').value;
+        var endEventTime = document.getElementById('end-time').value;
+        if (formId == 'sleep-form') {
+            eventType = 'sleep';
+            beginEventTime = document.getElementById('fell-asleep').value;
+            endEventTime = document.getElementById('woke-up').value;
+        }
+
         if (eventType.value === "Select") {
             alert("Please select an option before submitting.");
             formId.preventDefault(); // Prevent the form from being submitted.
@@ -94,26 +100,34 @@ function closeForm(formId) {
         const formateBeginTime = dayjs(formatedDay + beginEventTime).format('YYYY-MM-DD HH:mm');
         const formatedEndTime = dayjs(formatedDay + endEventTime).format('YYYY-MM-DD HH:mm');
         const length =  dayjs(formatedEndTime).diff(dayjs(formateBeginTime), 'minute');
-        console.log(length);
         
         // [
         //     {
-        //         "startHours": [],
-        //         "endHours": [],
-        //         "length": []
+        //         "type": ,
+        //         "startHours": ,
+        //         "endHours": ,
+        //         "length": 
         //     }
         // ]
 
+
         /* Conditional statement to alert each input */
+        
+        /*
+        const lengthHours = Math.floor(length/60);
+        const lengthMinutes = length%60;
         if(formId === 'schedule-form'){
             alert(`${eventType} event added: ${message} at ${eventTime}`);
-        }else if(formId === 'sleep-form' && sleepHours >= 8){
-            alert(`You slept for ${sleepHours} hours this day! I'm sure that is plenty.`)
-        }else if(formId === 'sleep-form' && sleepHours < 8 && sleepHours > 1){
-            alert(`You slept for ${sleepHours} hours this day! Binge watching Netflix again?`)
-        }else if(formId === 'sleep-form' && sleepHours < 2){
-            alert(`You slept for ${sleepHours} hour this day... Not great.`)
+        }else if(formId === 'sleep-form' && length >= 480){
+            alert(`You slept for ${lengthHours} hours and ${lengthMinutes} minutes this day! I'm sure that is plenty.`);
+        }else if(formId === 'sleep-form' && length < 480 && length >= 360){
+            alert(`You slept for ${lengthHours} hours and ${lengthMinutes} minutes this day! That's not quite enough but still good`);
+        }else if(formId === 'sleep-form' && length < 360 && length > 60){
+            alert(`You slept for ${lengthHours} hours and ${lengthMinutes} minutes this day! Binge watching Netflix again?`);
+        }else if(formId === 'sleep-form' && length < 60){
+            alert(`You slept for ${lengthMinutes} minutes this day... That's not even an hour.`);
         }
+        */
     }
 
 // get the moon phase using city name and time
@@ -135,7 +149,7 @@ function getMoonPhase(city, date){
         if (moonPhaseData <= 0.5) {
           var phasePercent = moonPhaseData * 200;
         } else {
-          var phasePercent = 200 * (moonPhaseData - (moonPhaseData * 2 - 1));
+          var phasePercent = 200 * (1 - moonPhaseData);
         }
 
         if (i === 3) {
@@ -184,8 +198,6 @@ function getCity() {
     });
 }
 
-getCity();
-
 
 /* Function to update day titles to selected day*/
 function updateDayTitles(selectedDate) {
@@ -207,9 +219,11 @@ function updateDayTitles(selectedDate) {
         }
     }
 }
+
+
 // Initial update of day titles with the current date
 updateDayTitles(dayjs());
-
+//getCity();
 
 
 
