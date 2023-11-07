@@ -93,8 +93,12 @@ function closeForm(formId) {
         /* Get the corresponding day and append info */
         const rawDay = dayjs(dayInput);
         const formatedDay = dayjs(rawDay).format('YYYY-MM-DD');
+        const formatedDayPlusOne = dayjs(rawDay).add(1,'day').format('YYYY-MM-DD');
         const formateBeginTime = dayjs(formatedDay + beginEventTime).format('YYYY-MM-DD HH:mm');
-        const formatedEndTime = dayjs(formatedDay + endEventTime).format('YYYY-MM-DD HH:mm');
+        var formatedEndTime = dayjs(formatedDay + endEventTime).format('YYYY-MM-DD HH:mm');;
+        if (dayjs(formatedEndTime).isBefore(dayjs(formateBeginTime))) {
+            formatedEndTime = dayjs(formatedDayPlusOne + endEventTime).format('YYYY-MM-DD HH:mm');
+        }
         const length =  dayjs(formatedEndTime).diff(dayjs(formateBeginTime), 'minute');
         
         const eventObject = {
