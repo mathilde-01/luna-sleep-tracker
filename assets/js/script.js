@@ -1,3 +1,6 @@
+//gets the list from local storage or makes it an empty array
+var eventList = JSON.parse(localStorage.getItem('lunaEventList')) || [];
+
 // Bulma calendar
 // Initialize all input of type date
 var calendars = bulmaCalendar.attach('[type="date"]', {
@@ -94,23 +97,23 @@ function closeForm(formId) {
         const formatedEndTime = dayjs(formatedDay + endEventTime).format('YYYY-MM-DD HH:mm');
         const length =  dayjs(formatedEndTime).diff(dayjs(formateBeginTime), 'minute');
         
-        // [
-        //     {
-        //         "type": ,
-        //         "startHours": ,
-        //         "endHours": ,
-        //         "length": 
-        //     }
-        // ]
+        const eventObject = {
+            "type": eventType,
+            "startHours": formateBeginTime,
+            "endHours": formatedEndTime,
+            "length": length
+        };
+
+        eventList.push(eventObject);
+        localStorage.setItem('lunaEventList', JSON.stringify(eventList));
 
 
         /* Conditional statement to alert each input */
         
-        /*
         const lengthHours = Math.floor(length/60);
         const lengthMinutes = length%60;
         if(formId === 'schedule-form'){
-            alert(`${eventType} event added: ${message} at ${eventTime}`);
+            alert(`${eventType} event added: ${message} from ${dayjs(formateBeginTime).format('hh:mm a')} to ${dayjs(formateEndTime).format('hh:mm a')}`);
         }else if(formId === 'sleep-form' && length >= 480){
             alert(`You slept for ${lengthHours} hours and ${lengthMinutes} minutes this day! I'm sure that is plenty.`);
         }else if(formId === 'sleep-form' && length < 480 && length >= 360){
@@ -120,7 +123,6 @@ function closeForm(formId) {
         }else if(formId === 'sleep-form' && length < 60){
             alert(`You slept for ${lengthMinutes} minutes this day... That's not even an hour.`);
         }
-        */
     }
 
 // get the moon phase using city name and time
