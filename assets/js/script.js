@@ -61,20 +61,19 @@ function closeForm(formId) {
 }
 /* Submit form- takes in the responses and Alerts user of added event*/
     function submitForm(formId) {
-        const formPopup = document.getElementById(formId);
-        const message = document.getElementById('message').value;
-        var eventType = document.getElementById('event-type').value;
-        var dayInput = document.getElementById('start-date').value;
-        var beginEventTime = document.getElementById('begin-time').value;
-        var endEventTime = document.getElementById('end-time').value;
+        const message = $('#message').val();
+        var eventType = $('#event-type').val();
+        var dayInput = $('#start-date').val();
+        var beginEventTime = $('#begin-time').val();
+        var endEventTime = $('#end-time').val();
         if (formId == 'sleep-form') {
             eventType = 'sleep';
-            dayInput = document.getElementById('sleep-date').value;
-            beginEventTime = document.getElementById('fell-asleep').value;
-            endEventTime = document.getElementById('woke-up').value;
+            dayInput = $('#sleep-date').val();
+            beginEventTime = $('#fell-asleep').val();
+            endEventTime = $('#woke-up').val();
         }
 
-        if (eventType.value === "Select") {
+        if (eventType === "Select") {
             alert("Please select an option before submitting.");
             formId.preventDefault(); // Prevent the form from being submitted.
         } else if (beginEventTime   === "") {
@@ -94,8 +93,12 @@ function closeForm(formId) {
         /* Get the corresponding day and append info */
         const rawDay = dayjs(dayInput);
         const formatedDay = dayjs(rawDay).format('YYYY-MM-DD');
+        const formatedDayPlusOne = dayjs(rawDay).add(1,'day').format('YYYY-MM-DD');
         const formateBeginTime = dayjs(formatedDay + beginEventTime).format('YYYY-MM-DD HH:mm');
-        const formatedEndTime = dayjs(formatedDay + endEventTime).format('YYYY-MM-DD HH:mm');
+        var formatedEndTime = dayjs(formatedDay + endEventTime).format('YYYY-MM-DD HH:mm');;
+        if (dayjs(formatedEndTime).isBefore(dayjs(formateBeginTime))) {
+            formatedEndTime = dayjs(formatedDayPlusOne + endEventTime).format('YYYY-MM-DD HH:mm');
+        }
         const length =  dayjs(formatedEndTime).diff(dayjs(formateBeginTime), 'minute');
         
         const eventObject = {
