@@ -1,3 +1,6 @@
+//gets the list from local storage or makes it an empty array
+var eventList = JSON.parse(localStorage.getItem('lunaEventList')) || [];
+
 // Bulma calendar
 // Initialize all input of type date
 var calendars = bulmaCalendar.attach('[type="date"]', {
@@ -57,66 +60,70 @@ function closeForm(formId) {
   formPopup.classList.remove("is-active");
 }
 /* Submit form- takes in the responses and Alerts user of added event*/
-function submitForm(formId) {
-  const formPopup = document.getElementById(formId);
-  const eventType = document.getElementById("event-type").value;
-  const message = document.getElementById("message").value;
-  const beginEventTime = document.getElementById("begin-time").value;
-  const endEventTime = document.getElementById("end-time").value;
-  const dayOffset = parseInt(formPopup.getAttribute("data-day-offset"));
-  const sleepHours = parseInt(document.getElementById("sleep-hours").value);
-  if (eventType.value === "Select") {
-    alert("Please select an option before submitting.");
-    formId.preventDefault(); // Prevent the form from being submitted.
-  } else if (beginEventTime === "") {
-    alert("Please select a start time before submitting.");
-    formId.preventDefault();
-  } else if (endEventTime === "") {
-    alert("Please select a end time before submitting.");
-    formId.preventDefault();
-  } else {
-    closeForm(formId);
-  }
+    function submitForm(formId) {
+        const formPopup = document.getElementById(formId);
+        const message = document.getElementById('message').value;
+        const dayOffset = parseInt(formPopup.getAttribute('data-day-offset'));
+        var eventType = document.getElementById('event-type').value;
+        var beginEventTime = document.getElementById('begin-time').value;
+        var endEventTime = document.getElementById('end-time').value;
+        if (formId == 'sleep-form') {
+            eventType = 'sleep';
+            beginEventTime = document.getElementById('fell-asleep').value;
+            endEventTime = document.getElementById('woke-up').value;
+        }
+
+        if (eventType.value === "Select") {
+            alert("Please select an option before submitting.");
+            formId.preventDefault(); // Prevent the form from being submitted.
+        } else if (beginEventTime   === "") {
+            alert("Please select a start time before submitting.");
+            formId.preventDefault();
+        } else if (endEventTime   === "") {
+            alert("Please select a end time before submitting.");
+            formId.preventDefault();
+        } else {
+            closeForm(formId);
+        }
 
   /* Create new div element to display submitted info in column */
 
   /* Conditional for adding text content */
 
-  /* Get the corresponding day and append info */
-  const rawDay = dayjs().add(dayOffset, "day");
-  const formatedDay = dayjs(rawDay).format("YYYY-MM-DD");
-  const formateBeginTime = dayjs(formatedDay + beginEventTime).format(
-    "YYYY-MM-DD HH:mm"
-  );
-  const formatedEndTime = dayjs(formatedDay + endEventTime).format(
-    "YYYY-MM-DD HH:mm"
-  );
-  const length = dayjs(formatedEndTime).diff(dayjs(formateBeginTime), "minute");
-  console.log(length);
+        /* Get the corresponding day and append info */
+        const rawDay = dayjs().add(dayOffset, 'day');
+        const formatedDay = dayjs(rawDay).format('YYYY-MM-DD');
+        const formateBeginTime = dayjs(formatedDay + beginEventTime).format('YYYY-MM-DD HH:mm');
+        const formatedEndTime = dayjs(formatedDay + endEventTime).format('YYYY-MM-DD HH:mm');
+        const length =  dayjs(formatedEndTime).diff(dayjs(formateBeginTime), 'minute');
+        
+        const eventObject = {
+            "type": eventType,
+            "startHours": formateBeginTime,
+            "endHours": formatedEndTime,
+            "length": length
+        };
 
-  // [
-  //     {
-  //         "startHours": [],
-  //         "endHours": [],
-  //         "length": []
-  //     }
-  // ]
+        eventList.push(eventObject);
+        localStorage.setItem('lunaEventList', JSON.stringify(eventList));
 
-  /* Conditional statement to alert each input */
-  if (formId === "schedule-form") {
-    alert(`${eventType} event added: ${message} at ${eventTime}`);
-  } else if (formId === "sleep-form" && sleepHours >= 8) {
-    alert(
-      `You slept for ${sleepHours} hours this day! I'm sure that is plenty.`
-    );
-  } else if (formId === "sleep-form" && sleepHours < 8 && sleepHours > 1) {
-    alert(
-      `You slept for ${sleepHours} hours this day! Binge watching Netflix again?`
-    );
-  } else if (formId === "sleep-form" && sleepHours < 2) {
-    alert(`You slept for ${sleepHours} hour this day... Not great.`);
-  }
-}
+
+        /* Conditional statement to alert each input */
+        
+        const lengthHours = Math.floor(length/60);
+        const lengthMinutes = length%60;
+        if(formId === 'schedule-form'){
+            alert(`${eventType} event added: ${message} from ${dayjs(formateBeginTime).format('hh:mm a')} to ${dayjs(formateEndTime).format('hh:mm a')}`);
+        }else if(formId === 'sleep-form' && length >= 480){
+            alert(`You slept for ${lengthHours} hours and ${lengthMinutes} minutes this day! I'm sure that is plenty.`);
+        }else if(formId === 'sleep-form' && length < 480 && length >= 360){
+            alert(`You slept for ${lengthHours} hours and ${lengthMinutes} minutes this day! That's not quite enough but still good`);
+        }else if(formId === 'sleep-form' && length < 360 && length > 60){
+            alert(`You slept for ${lengthHours} hours and ${lengthMinutes} minutes this day! Binge watching Netflix again?`);
+        }else if(formId === 'sleep-form' && length < 60){
+            alert(`You slept for ${lengthMinutes} minutes this day... That's not even an hour.`);
+        }
+    }
 
 // get the moon phase using city name and time
 function getMoonPhase(city, date) {
@@ -144,7 +151,7 @@ function getMoonPhase(city, date) {
         if (moonPhaseData <= 0.5) {
           var phasePercent = Math.round(moonPhaseData * 200);
         } else {
-          var phasePercent = Math.round(200 * (moonPhaseData - (moonPhaseData * 2 - 1)));
+          var phasePercent = 200 * (1 - moonPhaseData);
         }
 
         if (i === 3) {
@@ -192,8 +199,6 @@ function getCity() {
       getMoonPhase(data.city, date);
     });
 }
-
-getCity();
 
 
 /* Function to update day titles to selected day*/
@@ -251,7 +256,7 @@ for (var i = 0; i < calendars.length; i++){
 
 // Initial update of day titles with the current date
 updateDayTitles(dayjs());
-
+//getCity();
 
 
 
