@@ -98,6 +98,16 @@ h4{
 
 }
 
+.error {
+    border-color: red;
+}
+
+.error::after {
+    content: '* this field is required';
+    color: red;
+  }
+  
+
 /* calendar styling */
 .datetimepicker-header.is-date-only {
     display: none;
