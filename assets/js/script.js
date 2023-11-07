@@ -5,7 +5,7 @@ var eventList = JSON.parse(localStorage.getItem('lunaEventList')) || [];
 // Initialize all input of type date
 var calendars = bulmaCalendar.attach('[type="date"]', {
   datePicker: "inline",
-  startDate: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2),
+  startDate: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3),
   endDate: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 3),
 });
 
@@ -193,6 +193,7 @@ function getCity() {
     })
     // display their city and the current day using dayjs
     .then(function (data) {
+    console.log(data.city)
       // get the moon phase using the city they're in and the current time
       var date = dayjs().format("YYYY-MM-DD");
 
