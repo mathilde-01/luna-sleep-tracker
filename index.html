@@ -37,6 +37,10 @@
                         <input type="date" color="black" data-display-mode="inline" data-is-range="true"
                             data-close-on-select="false">
                     </div>
+                    <div class="content">
+                        <button class="button" onclick="openForm('schedule-form')">Update Schedule</button>
+                        <button class="button" onclick="openForm('sleep-form')">Enter Sleep Hours</button>
+                    </div>
                 </div>
                 <!-- Vertical Columns for Days-->
                 <div class="columns" id="day-titles-container">
@@ -62,13 +66,14 @@
                     <h2 class="title">Today</h2> 
                     <button class="button" onclick="openForm('schedule-form',0)">Update Schedule</button>
                     <button class="button" onclick="openForm('sleep-form',0)">Enter Sleep Hours</button>
-                </div>-->
+                </div>
 
                 <div class="column">
                     <h2 class="title">Tomorrow</h2> 
                     <button class="button" onclick="openForm('schedule-form',1)">Update Schedule</button>
                     <button class="button" onclick="openForm('sleep-form',1)">Enter Sleep Hours</button>
                 </div>
+                -->
             </div>
         </div>
         </div>
@@ -106,6 +111,8 @@
                         <label class="label">Time</label>
                         <div class="control">
                             <div class="time"> <!--The Color is set here as a temperart fix and should be replaced-->
+                                <p style="color:black;">Date:</p>
+                                <input id="start-date" type="date" name="start-date" />
                                 <p style="color:black;">Start Time:</p>
                                 <input id="begin-time" type="time" name="begin-time" />
                                 <p style="color:black;">End Time:</p>
@@ -151,6 +158,8 @@
                         <label class="label">Enter When You Slept</label>
                         <div class="control">
                             <div class="time"> <!--The Color is set here as a temperart fix and should be replaced-->
+                                <p style="color:black;">Date (when you fell asleep):</p>
+                                <input id="sleep-date" type="date" name="sleep-date" />
                                 <p style="color:black;">Fell Asleep:</p>
                                 <input id="fell-asleep" type="time" name="fell-asleep" />
                                 <p style="color:black;">Woke Up:</p>
