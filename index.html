@@ -17,7 +17,7 @@
         <div class="hero-body">
             <div class="container" id="logo-container">
                 <div class="image-container">
-                <img src="./assets/images/luna.png" alt="Luna Image" id="luna-image">
+                    <img src="./assets/images/luna.png" alt="Luna Image" id="luna-image">
                 </div>
             </div>
         </div>
@@ -25,7 +25,8 @@
 
     <!-- Body -->
     <section class="section">
-        <div id="info-header"> <h4 id="info-text"></h4>
+        <div id="info-header">
+            <h4 id="info-text"></h4>
         </div>
         <div class="container">
             <div class="columns" id="main-row">
@@ -33,13 +34,13 @@
                 <!-- Mini Calendar Section-->
                 <div class="column is-one-third">
                     <div class="content is-normal">
-                        <input type="date" color="black" data-display-mode="inline" data-is-range="true" data-close-on-select="false">
+                        <input type="date" color="black" data-display-mode="inline" data-is-range="true"
+                            data-close-on-select="false" id="currentWeekCalendar" >
+                    </div>
                 </div>
-                </div>
-
                 <!-- Vertical Columns for Days-->
                 <div class="columns" id="day-titles-container">
-                <!--<div class="column">
+                    <!--<div class="column">
                     <h2 class="title">3 Days Ago</h2> 
                     <button class="button" onclick="openForm('schedule-form',-3)">Update Schedule</button>
                     <button class="button" onclick="openForm('sleep-form',-3)">Enter Sleep Hours</button>
@@ -69,14 +70,14 @@
                     <button class="button" onclick="openForm('sleep-form',1)">Enter Sleep Hours</button> -->
                 </div>
             </div>
-            </div>
+        </div>
         </div>
     </section>
 
     <!--Modal Pop-up form for adding events-->
     <div id="schedule-form" class="modal">
         <!--Clicking off the form closes it-->
-       <div class="modal-background" onclick="closeForm('schedule-form')"></div> 
+        <div class="modal-background" onclick="closeForm('schedule-form')"></div>
         <div class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title">Update Schedule</p>
@@ -105,7 +106,7 @@
                         <label class="label">Time</label>
                         <div class="control">
                             <div class="time"> <!--The Color is set here as a temperart fix and should be replaced-->
-                                <p style="color:black;">Start Time:</p> 
+                                <p style="color:black;">Start Time:</p>
                                 <input id="begin-time" type="time" name="begin-time" />
                                 <p style="color:black;">End Time:</p>
                                 <input id="end-time" type="time" name="end-time" />
@@ -120,7 +121,7 @@
                             <input class="input" type="text" id="message" placeholder="Enter Calendar Event">
                             <span class="icon is-small is-left">
                                 <i class="fa fa-calendar"></i>
-                              </span>
+                            </span>
                         </div>
                     </div>
                 </form>
@@ -134,43 +135,43 @@
         </div>
     </div>
 
-<!--Sleep Form-->
+    <!--Sleep Form-->
     <div id="sleep-form" class="modal">
-        <div class="modal-background" onclick="closeForm('sleep-form')"></div> 
-            <div class="modal-card">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Enter Sleep Hours</p>
-                    <button class="delete" aria-label="close" onclick="closeForm('sleep-form')"></button>
-                </header>
+        <div class="modal-background" onclick="closeForm('sleep-form')"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Enter Sleep Hours</p>
+                <button class="delete" aria-label="close" onclick="closeForm('sleep-form')"></button>
+            </header>
 
-                <!--Sleep form body: Hours slept dropdown-->
-                <section class="modal-card-body">
-                     <form>
-                        <div class="field">
-                            <label class="label">Enter When You Slept</label>
+            <!--Sleep form body: Hours slept dropdown-->
+            <section class="modal-card-body">
+                <form>
+                    <div class="field">
+                        <label class="label">Enter When You Slept</label>
                         <div class="control">
                             <div class="time"> <!--The Color is set here as a temperart fix and should be replaced-->
-                                <p style="color:black;">Fell Asleep:</p> 
+                                <p style="color:black;">Fell Asleep:</p>
                                 <input id="fell-asleep" type="time" name="fell-asleep" />
                                 <p style="color:black;">Woke Up:</p>
                                 <input id="woke-up" type="time" name="woke-up" />
                             </div>
                         </div>
 
-                    </form>
-                </section>
-                <footer class="modal-card-foot">
-                    <button class="button is-success" onclick="submitForm('sleep-form')">Submit</button>
-                    <button class="button" onclick="closeForm('sleep-form')">Cancel</button>
-                </footer>
-            </div>
-         </div>
+                </form>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" onclick="submitForm('sleep-form')">Submit</button>
+                <button class="button" onclick="closeForm('sleep-form')">Cancel</button>
+            </footer>
+        </div>
+    </div>
     </div>
 
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bulma-calendar@6.1.19/dist/js/bulma-calendar.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
 
