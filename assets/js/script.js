@@ -52,7 +52,6 @@ if (element) {
 function openForm(formId, day) {
   const formPopup = document.getElementById(formId);
   formPopup.classList.add("is-active");
-  formPopup.setAttribute("data-day-offset", day);
 }
 /* Close form*/
 function closeForm(formId) {
@@ -63,12 +62,13 @@ function closeForm(formId) {
     function submitForm(formId) {
         const formPopup = document.getElementById(formId);
         const message = document.getElementById('message').value;
-        const dayOffset = parseInt(formPopup.getAttribute('data-day-offset'));
         var eventType = document.getElementById('event-type').value;
+        var dayInput = document.getElementById('start-date').value;
         var beginEventTime = document.getElementById('begin-time').value;
         var endEventTime = document.getElementById('end-time').value;
         if (formId == 'sleep-form') {
             eventType = 'sleep';
+            dayInput = document.getElementById('sleep-date').value;
             beginEventTime = document.getElementById('fell-asleep').value;
             endEventTime = document.getElementById('woke-up').value;
         }
@@ -91,7 +91,7 @@ function closeForm(formId) {
   /* Conditional for adding text content */
 
         /* Get the corresponding day and append info */
-        const rawDay = dayjs().add(dayOffset, 'day');
+        const rawDay = dayjs(dayInput);
         const formatedDay = dayjs(rawDay).format('YYYY-MM-DD');
         const formateBeginTime = dayjs(formatedDay + beginEventTime).format('YYYY-MM-DD HH:mm');
         const formatedEndTime = dayjs(formatedDay + endEventTime).format('YYYY-MM-DD HH:mm');
@@ -149,10 +149,11 @@ function getMoonPhase(city, date) {
         console.log(moonPhaseData);
 
         if (moonPhaseData <= 0.5) {
-          var phasePercent = Math.round(moonPhaseData * 200);
+          var phasePercent = moonPhaseData * 200;
         } else {
           var phasePercent = 200 * (1 - moonPhaseData);
         }
+        phasePercent = Math.round(phasePercent)
 
         if (i === 3) {
           var moonIndex = Math.round(moonPhaseData * 8) % 8;
@@ -226,7 +227,7 @@ function updateDayTitles(selectedDate) {
 
 // Initial update of day titles with the current date
 updateDayTitles(dayjs());
-//getCity();
+getCity();
 
 
 
