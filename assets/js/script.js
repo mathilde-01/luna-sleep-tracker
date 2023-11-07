@@ -1,7 +1,10 @@
 // Bulma calendar
 // Initialize all input of type date
-var calendars = bulmaCalendar.attach('[type="date"]', { datePicker: "inline" });
-var 
+var calendars = bulmaCalendar.attach('[type="date"]', {
+  datePicker: "inline",
+  startDate: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2),
+  endDate: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 3),
+});
 
 const moonImages = {
   firstQuarter: "assets/images/moon-icons/first-quarter.png",
@@ -39,16 +42,6 @@ if (element) {
   // bulmaCalendar instance is available as element.bulmaCalendar
   element.bulmaCalendar.on("select", function (datepicker) {
     console.log(datepicker.data.value());
-
-    // Get the selected date
-    const selectedDate = datepicker.data.value();
-
-    // Calculate 3 days before the selected date
-    const twoDaysBefore = new Date(selectedDate);
-    twoDaysBefore.setDate(twoDaysBefore.getDate() - 3);
-
-    // Set the date range in the input field
-    datepicker.data.range([twoDaysBefore, selectedDate]);
   });
 }
 
@@ -131,12 +124,19 @@ function closeForm(formId) {
     }
 
 // get the moon phase using city name and time
-function getMoonPhase(city, date){
+function getMoonPhase(city, date) {
+  var dateRangeMin = dayjs(date).subtract(3, "day").format("YYYY-MM-DD");
+  var dateRangeMax = dayjs(date).add(3, "day").format("YYYY-MM-DD");
 
-	var dateRangeMin = dayjs(date).subtract(3, "day").format("YYYY-MM-DD");
-	var dateRangeMax = dayjs(date).add(3, "day").format("YYYY-MM-DD");
-
-	fetch('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/' + city + '/' + dateRangeMin + '/' + dateRangeMax + '?unitGroup=us&elements=moonphase&include=current&key=Z6C7FPXUVA9JACX4YZ6VGQPPK&contentType=json')
+  fetch(
+    "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" +
+      city +
+      "/" +
+      dateRangeMin +
+      "/" +
+      dateRangeMax +
+      "?unitGroup=us&elements=moonphase&include=current&key=Z6C7FPXUVA9JACX4YZ6VGQPPK&contentType=json"
+  )
     .then(function (response) {
       return response.json();
     })
@@ -201,23 +201,23 @@ function getCity() {
 
 /* Function to update day titles to selected day*/
 function updateDayTitles(selectedDate) {
-    const dayTitlesContainer = document.getElementById("day-titles-container");
+  const dayTitlesContainer = document.getElementById("day-titles-container");
 
-    if (dayTitlesContainer) {
-        // Clear the existing day titles
-        dayTitlesContainer.innerHTML = "";
+  if (dayTitlesContainer) {
+    // Clear the existing day titles
+    dayTitlesContainer.innerHTML = "";
 
-        // Calculate and set the day titles
-        for (let i = -3; i <= 3; i++) {
-            const day = selectedDate.add(i, 'day');
-            const dayOfWeek = day.format("dddd");
-            const date = day.format('MM/DD');
-            const column = document.createElement("div");
-            column.classList.add("column");
-            column.innerHTML = `<h2 class="title">${dayOfWeek} ${date}</h2>`;
-            dayTitlesContainer.appendChild(column);
-        }
+    // Calculate and set the day titles
+    for (let i = -3; i <= 3; i++) {
+      const day = selectedDate.add(i, "day");
+      const dayOfWeek = day.format("dddd");
+      const date = day.format("MM/DD");
+      const column = document.createElement("div");
+      column.classList.add("column");
+      column.innerHTML = `<h2 class="title">${dayOfWeek} ${date}</h2>`;
+      dayTitlesContainer.appendChild(column);
     }
+  }
 }
 
 
