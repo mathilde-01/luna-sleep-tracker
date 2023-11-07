@@ -1,5 +1,6 @@
 //gets the list from local storage or makes it an empty array
 var eventList = JSON.parse(localStorage.getItem('lunaEventList')) || [];
+var phasePercentages = [];
 
 // Bulma calendar
 // Initialize all input of type date
@@ -146,6 +147,66 @@ function closeForm(formId) {
         // }
     }
 
+/* Function to update day titles to selected day*/
+function updateDayTitles(selectedDate) {
+    var dayTitlesContainer = $("#day-titles-container");
+  
+    if (dayTitlesContainer) {
+        // Clear the existing day titles
+        dayTitlesContainer.html("");
+  
+        // Calculate and set the day titles
+        for (let i = -3; i <= 3; i++) {
+            var day = selectedDate.add(i, "day");
+            var columnEl = $('<div>');
+            var dayOfWeek = $('<h4>');
+            var date = $('<h3>');
+          
+          
+            dayOfWeek.text(day.format("ddd").toUpperCase());
+            date.text(day.format("D"));
+            columnEl.addClass("column p-0");
+            columnEl.attr("id", day.format("YYYY-MM-DD"));
+  
+            columnEl.append(dayOfWeek);
+            columnEl.append(date);
+            dayTitlesContainer.append(columnEl);
+  
+        }
+    }
+}
+
+function printSchedule() {
+    if (eventList) {
+        for (i = 0; i < eventList.length; i++) {
+            var startTimeDate = eventList[i].startHours.slice(0, 10);
+            var lengthOfEventInMinutes = eventList[i].length;
+            var endTimeDate = eventList[i].endHours.slice(0, 10);
+            var startTime = eventList[i].startHours.slice(11);
+            var endTime = eventList[i].endHours.slice(11);
+            var startTimeInMinutes = (parseInt(startTime.slice(0,2))) * 60 + parseInt(startTime.slice(3));
+    
+            
+            if (startTimeDate === endTimeDate) {
+                for (x = 0; x < lengthOfEventInMinutes; x++) {
+                    minuteIndex = startTimeInMinutes + x;
+                    $('#' + startTimeDate + '-' + minuteIndex).css("background-color", "var(--accent)");
+                }
+            } else {
+                for (x = 0; x < 1440 - startTimeInMinutes; x++) {
+                    minuteIndex = startTimeInMinutes + x;
+                    lengthOfEventInMinutes--;
+                    $('#' + startTimeDate + '-' + minuteIndex).css("background-color", "var(--accent)");
+                }
+                for (x = 0; x < lengthOfEventInMinutes; x++) {
+                    minuteIndex = 0 + x;
+                    $('#' + endTimeDate + '-' + minuteIndex).css("background-color", "var(--accent)");
+                }
+            }
+        }
+    }
+}
+
 // get the moon phase using city name and time
 function getMoonPhase(city, date) {
   var dateRangeMin = dayjs(date).subtract(3, "day").format("YYYY-MM-DD");
@@ -167,14 +228,16 @@ function getMoonPhase(city, date) {
     .then(function (data) {
       for (i = 0; i < 7; i++) {
         var moonPhaseData = data.days[i].moonphase;
-        console.log(moonPhaseData);
+        var dateIndex = dayjs(dateRangeMin).add(i, "day").format("YYYY-MM-DD");
+        
 
         if (moonPhaseData <= 0.5) {
           var phasePercent = moonPhaseData * 200;
         } else {
           var phasePercent = 200 * (1 - moonPhaseData);
         }
-        phasePercent = Math.round(phasePercent)
+        phasePercent = Math.round(phasePercent);
+        phasePercentages.push(phasePercent/100);
 
         if (i === 3) {
           var moonIndex = Math.round(moonPhaseData * 8) % 8;
@@ -201,8 +264,17 @@ function getMoonPhase(city, date) {
             $("#info-text").append(" Close your blinds tonight!");
           }
         }
-      }
-    });
+        
+        for (x = 0; x < 1440; x++) {
+            var minutesEl = $('<div>');
+            minutesEl.attr("id", dayjs(dateIndex).format("YYYY-MM-DD-") + x);
+            minutesEl.css({"height":"0.25px", "background-color":"rgba(242, 242, 242, " + phasePercentages[i]/2 + ")"});
+  
+            $('#' + dayjs(dateIndex).format("YYYY-MM-DD")).append(minutesEl);
+        }
+    }
+    printSchedule();    
+});
 }
 
 // get user city from ip address
@@ -215,40 +287,11 @@ function getCity() {
     })
     // display their city and the current day using dayjs
     .then(function (data) {
-    console.log(data.city)
       // get the moon phase using the city they're in and the current time
       var date = dayjs().format("YYYY-MM-DD");
 
       getMoonPhase(data.city, date);
     });
-}
-
-
-/* Function to update day titles to selected day*/
-function updateDayTitles(selectedDate) {
-  var dayTitlesContainer = $("#day-titles-container");
-
-  if (dayTitlesContainer) {
-    // Clear the existing day titles
-    dayTitlesContainer.html("");
-
-    // Calculate and set the day titles
-    for (let i = -3; i <= 3; i++) {
-        var day = selectedDate.add(i, "day");
-        var columnEl = $('<div>');
-        var dayOfWeek = $('<h4>');
-        var date = $('<h3>');
-        
-        
-        dayOfWeek.text(day.format("ddd").toUpperCase());
-        date.text(day.format("D"));
-        columnEl.addClass("column");
-
-        columnEl.append(dayOfWeek);
-        columnEl.append(date);
-        dayTitlesContainer.append(columnEl);
-    }
-}
 }
 
 
@@ -271,6 +314,3 @@ for (var i = 0; i < calendars.length; i++){
 // Initial update of day titles with the current date
 updateDayTitles(dayjs());
 getCity();
-
-
-
