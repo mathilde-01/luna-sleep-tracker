@@ -63,28 +63,45 @@ function closeForm(formId) {
 /* Submit form- takes in the responses and Alerts user of added event*/
     function submitForm(formId) {
         const message = $('#message').val();
-        var eventType = $('#event-type').val();
-        var dayInput = $('#start-date').val();
-        var beginEventTime = $('#begin-time').val();
-        var endEventTime = $('#end-time').val();
+        const formElement = $(`#${formId}`);
+        var eventTypeElement = $('#event-type');
+        var eventType = eventTypeElement.val();
+        var dayInputElement = $('#start-date');
+        var beginEventTimeElement = $('#begin-time');
+        var endEventTimeElement = $('#end-time');
         if (formId == 'sleep-form') {
             eventType = 'sleep';
-            dayInput = $('#sleep-date').val();
-            beginEventTime = $('#fell-asleep').val();
-            endEventTime = $('#woke-up').val();
+            dayInputElement = $('#sleep-date');
+            beginEventTimeElement = $('#fell-asleep');
+            endEventTimeElement = $('#woke-up');
         }
+        var eventType = eventTypeElement.val();
+        var dayInput = dayInputElement.val();
+        var beginEventTime = beginEventTimeElement.val();
+        var endEventTime = endEventTimeElement.val();
+
+
 
         if (eventType === "Select") {
-            alert("Please select an option before submitting.");
-            formId.preventDefault(); // Prevent the form from being submitted.
-        } else if (beginEventTime   === "") {
-            alert("Please select a start time before submitting.");
-            formId.preventDefault();
-        } else if (endEventTime   === "") {
-            alert("Please select a end time before submitting.");
-            formId.preventDefault();
+            //alert("Please select an option before submitting.");
+            eventTypeElement.addClass('error');
         } else {
-            closeForm(formId);
+            eventTypeElement.removeClass('error');
+        }
+        if (dayInput   === "") {
+            dayInputElement.addClass('error');
+        } else {
+            dayInputElement.removeClass('error');
+        }
+        if (beginEventTime   === "") {
+            beginEventTimeElement.addClass('error');
+        } else {
+            beginEventTimeElement.removeClass('error');
+        }
+        if (endEventTime   === "") {
+            endEventTimeElement.addClass('error');
+        } else {
+            endEventTimeElement.removeClass('error');
         }
 
   /* Create new div element to display submitted info in column */
@@ -104,30 +121,30 @@ function closeForm(formId) {
         
         const eventObject = {
             "type": eventType,
-            "startHours": formateBeginTime,
-            "endHours": formatedEndTime,
+            "startHour": formateBeginTime,
+            "endHour": formatedEndTime,
             "length": length
         };
-
-        eventList.push(eventObject);
-        localStorage.setItem('lunaEventList', JSON.stringify(eventList));
-
+        if (length != null) {
+            eventList.push(eventObject);
+            localStorage.setItem('lunaEventList', JSON.stringify(eventList));
+        }
 
         /* Conditional statement to alert each input */
         
-        const lengthHours = Math.floor(length/60);
-        const lengthMinutes = length%60;
-        if(formId === 'schedule-form'){
-            alert(`${eventType} event added: ${message} from ${dayjs(formateBeginTime).format('hh:mm a')} to ${dayjs(formateEndTime).format('hh:mm a')}`);
-        }else if(formId === 'sleep-form' && length >= 480){
-            alert(`You slept for ${lengthHours} hours and ${lengthMinutes} minutes this day! I'm sure that is plenty.`);
-        }else if(formId === 'sleep-form' && length < 480 && length >= 360){
-            alert(`You slept for ${lengthHours} hours and ${lengthMinutes} minutes this day! That's not quite enough but still good`);
-        }else if(formId === 'sleep-form' && length < 360 && length > 60){
-            alert(`You slept for ${lengthHours} hours and ${lengthMinutes} minutes this day! Binge watching Netflix again?`);
-        }else if(formId === 'sleep-form' && length < 60){
-            alert(`You slept for ${lengthMinutes} minutes this day... That's not even an hour.`);
-        }
+        // const lengthHours = Math.floor(length/60);
+        // const lengthMinutes = length%60;
+        // if(formId === 'schedule-form'){
+        //     alert(`${eventType} event added: ${message} from ${dayjs(formateBeginTime).format('hh:mm a')} to ${dayjs(formateEndTime).format('hh:mm a')}`);
+        // }else if(formId === 'sleep-form' && length >= 480){
+        //     alert(`You slept for ${lengthHours} hours and ${lengthMinutes} minutes this day! I'm sure that is plenty.`);
+        // }else if(formId === 'sleep-form' && length < 480 && length >= 360){
+        //     alert(`You slept for ${lengthHours} hours and ${lengthMinutes} minutes this day! That's not quite enough but still good`);
+        // }else if(formId === 'sleep-form' && length < 360 && length > 60){
+        //     alert(`You slept for ${lengthHours} hours and ${lengthMinutes} minutes this day! Binge watching Netflix again?`);
+        // }else if(formId === 'sleep-form' && length < 60){
+        //     alert(`You slept for ${lengthMinutes} minutes this day... That's not even an hour.`);
+        // }
     }
 
 /* Function to update day titles to selected day*/
