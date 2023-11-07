@@ -14,7 +14,10 @@ DAY.JS: Gets information about the current day
 Bulma Calendar: Displays a responsive calendar with the current week schedule  
 
 ## Contributors
-
+Diana Discher  
+Opal Snellenberger
+Scott Dennonn  
+Mathilde Alarcon  
 
 ## Credits  
 [Bulma documentation](https://bulma-calendar.onrender.com/)  
