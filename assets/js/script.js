@@ -205,6 +205,7 @@ function getCity() {
 
 
 /* Function to update day titles to selected day*/
+<<<<<<< Updated upstream
 function updateDayTitles(selectedDate, selectedEndDate) {
     const dayTitlesContainer = document.getElementById("day-titles-container");
 
@@ -235,6 +236,30 @@ function updateDayTitles(selectedDate, selectedEndDate) {
             column.innerHTML = `<h3 class="title">${dayOfWeek} ${date}</h2>`;
             dayTitlesContainer.appendChild(column);
         }
+=======
+function updateDayTitles(selectedDate) {
+  var dayTitlesContainer = $("#day-titles-container");
+
+  if (dayTitlesContainer) {
+    // Clear the existing day titles
+    dayTitlesContainer.html("");
+
+    // Calculate and set the day titles
+    for (let i = -3; i <= 3; i++) {
+        var day = selectedDate.add(i, "day");
+        var columnEl = $('<div>');
+        var dayOfWeek = $('<h4>');
+        var date = $('<h3>');
+        
+        
+        dayOfWeek.text(day.format("ddd").toUpperCase());
+        date.text(day.format("D"));
+        columnEl.addClass("column");
+
+        columnEl.append(dayOfWeek);
+        columnEl.append(date);
+        dayTitlesContainer.append(columnEl);
+>>>>>>> Stashed changes
     }
 }
 }
