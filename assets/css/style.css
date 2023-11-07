@@ -82,7 +82,11 @@ h4{
 }
 
 /* calendar styling */
-.datetimepicker-header.is-date-only{
+.datetimepicker-header.is-date-only {
+    display: none;
+}
+
+.datetimepicker .datetimepicker-footer {
     display: none;
 }
 
