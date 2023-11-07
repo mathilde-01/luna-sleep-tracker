@@ -103,14 +103,14 @@ function closeForm(formId) {
         
         const eventObject = {
             "type": eventType,
-            "startHours": formateBeginTime,
-            "endHours": formatedEndTime,
+            "startHour": formateBeginTime,
+            "endHour": formatedEndTime,
             "length": length
         };
-
-        eventList.push(eventObject);
-        localStorage.setItem('lunaEventList', JSON.stringify(eventList));
-
+        if (length != null) {
+            eventList.push(eventObject);
+            localStorage.setItem('lunaEventList', JSON.stringify(eventList));
+        }
 
         /* Conditional statement to alert each input */
         
