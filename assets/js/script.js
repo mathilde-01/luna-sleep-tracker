@@ -251,7 +251,7 @@ function hideInitialDays() {
 
 /* Event listener for selecting dates on bulma calendar */
 for (var i = 0; i < calendars.length; i++){
-    calendars[i].on('select', function () {
+    calendars[i].on('select', function (selectedDate, selectedEndDate) {
         hideInitialDays();
     });
 }
