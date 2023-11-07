@@ -36,6 +36,7 @@ for (var i = 0; i < calendars.length; i++) {
   // Add listener to select event
   calendars[i].on("select", (date) => {
     console.log(date);
+
   });
 }
 
@@ -217,20 +218,20 @@ function updateDayTitles(selectedDate, selectedEndDate) {
             var date = currentDate.format('MM/DD');
             var column = document.createElement("div");
             column.classList.add("column");
-            column.innerHTML = `<h2 class="title">${dayOfWeek} ${date},</h2>`;
+            column.innerHTML = `<h3 class="title">${dayOfWeek} ${date},</h2>`;
             dayTitlesContainer.appendChild(column);
             currentDate = currentDate.add(1, 'day');
             }
         } else{
 
-        // Calculate and set the day titles
+        // Calculate and set the day titles 
         for (let i = -3; i <= 3; i++) {
-            const day = selectedDate.add(i, 'day');
-            const dayOfWeek = day.format("dddd");
-            const date = day.format('MM/DD');
-            const column = document.createElement("div");
+            var day = selectedDate.add(i, 'day');
+            var dayOfWeek = day.format("dddd");
+            var date = day.format('MM/DD');
+            var column = document.createElement("div");
             column.classList.add("column", "initial-days"); //added class to use in hide function
-            column.innerHTML = `<h2 class="title">${dayOfWeek} ${date}</h2>`;
+            column.innerHTML = `<h3 class="title">${dayOfWeek} ${date}</h2>`;
             dayTitlesContainer.appendChild(column);
         }
     }
@@ -251,7 +252,6 @@ function hideInitialDays() {
 for (var i = 0; i < calendars.length; i++){
     calendars[i].on('select', function () {
         hideInitialDays();
-
     });
 }
 
