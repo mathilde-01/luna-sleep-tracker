@@ -149,7 +149,7 @@ function getMoonPhase(city, date) {
         console.log(moonPhaseData);
 
         if (moonPhaseData <= 0.5) {
-          var phasePercent = moonPhaseData * 200;
+          var phasePercent = Math.round(moonPhaseData * 200);
         } else {
           var phasePercent = 200 * (1 - moonPhaseData);
         }
