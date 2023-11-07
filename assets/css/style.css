@@ -102,9 +102,15 @@ h4{
     border-color:  #5d37a4!important;  
 }
 
-/* button.date-item:hover { 
-    border-color:  #5d37a4; 
-} */
+.datetimepicker.is-primary .datepicker-body .datepicker-dates .datepicker-days .datepicker-date.datepicker-range.datepicker-range-start .date-item {
+    border: none;
+    color: white;
+}
+
+.datetimepicker.is-primary .datepicker-body .datepicker-dates .datepicker-days .datepicker-date.datepicker-range.datepicker-range-end .date-item {
+    border: none;
+    color: white;
+}
 
 .datepicker-range {
     background-color: #5d37a4!important;
