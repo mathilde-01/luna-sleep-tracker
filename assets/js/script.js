@@ -205,38 +205,6 @@ function getCity() {
 
 
 /* Function to update day titles to selected day*/
-<<<<<<< Updated upstream
-function updateDayTitles(selectedDate, selectedEndDate) {
-    const dayTitlesContainer = document.getElementById("day-titles-container");
-
-    if (dayTitlesContainer) {
-        // Clear the existing day titles
-        dayTitlesContainer.innerHTML = "";
-        // For date range
-        var currentDate = selectedDate;
-        if (selectedEndDate) {
-            while(currentDate.isSameOrBefore(selectedEndDate)) {
-            var dayOfWeek = currentDate.format("dddd");
-            var date = currentDate.format('MM/DD');
-            var column = document.createElement("div");
-            column.classList.add("column");
-            column.innerHTML = `<h3 class="title">${dayOfWeek} ${date},</h2>`;
-            dayTitlesContainer.appendChild(column);
-            currentDate = currentDate.add(1, 'day');
-            }
-        } else{
-
-        // Calculate and set the day titles 
-        for (let i = -3; i <= 3; i++) {
-            var day = selectedDate.add(i, 'day');
-            var dayOfWeek = day.format("dddd");
-            var date = day.format('MM/DD');
-            var column = document.createElement("div");
-            column.classList.add("column", "initial-days"); //added class to use in hide function
-            column.innerHTML = `<h3 class="title">${dayOfWeek} ${date}</h2>`;
-            dayTitlesContainer.appendChild(column);
-        }
-=======
 function updateDayTitles(selectedDate) {
   var dayTitlesContainer = $("#day-titles-container");
 
@@ -259,7 +227,6 @@ function updateDayTitles(selectedDate) {
         columnEl.append(dayOfWeek);
         columnEl.append(date);
         dayTitlesContainer.append(columnEl);
->>>>>>> Stashed changes
     }
 }
 }
