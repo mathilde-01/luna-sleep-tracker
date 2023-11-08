@@ -13,7 +13,6 @@ body {
     background-color: var(--background);
     height: 100vh;
     color: var(--text);
-    overflow-x: hidden;
 }
 
 h1, h2 {
@@ -70,12 +69,6 @@ h4{
     display: block;
 }
 
-#logo-container{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
 #info-header{
     background-color: rgba(242, 242, 242, .1);
     border-radius: 10px;
@@ -88,14 +81,6 @@ h4{
 
 #day-titles-container {
     width: 100%;
-    text-align: center;
-    display: flex;
-}
-
-#day-titles-container {
-    width: 100%;
-    text-align: center;
-    display: flex;
 }
 
 .error {
