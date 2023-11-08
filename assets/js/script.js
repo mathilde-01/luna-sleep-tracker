@@ -208,26 +208,34 @@ function printSchedule() {
             var endTimeDate = dayjs(eventList[i].endHours).format('YYYY-MM-DD');
             var startTimeInMinutes = (parseInt(dayjs(eventList[i].startHours).format('HH'))) * 60 + parseInt(dayjs(eventList[i].startHours).format('mm'));
             var endTimeInMinutes = (parseInt(dayjs(eventList[i].endHours).format('HH'))) * 60 + parseInt(dayjs(eventList[i].endHours).format('mm'));
-            $('#'+startTimeDate)
+            
+            var dayEl = $('#'+startTimeDate)
+            var eventEl = $("<div>");
+            eventEl.width(dayEl.width());
+            eventEl.height(lengthOfEventInMinutes / 4);
+            eventEl.css({
+                'position': 'absolute',
+                'left': '0',
+                'top': (startTimeInMinutes/4) + 'px',
+                'background-color' : 'var(--accent)'
+            })
+            $('#'+startTimeDate).children('.day-spot').append(eventEl);
+
             // startTimeInMinutes / 4 px
             // lengthOfEventInMinutes / 4 px
             if (startTimeDate === endTimeDate) {
-                //$('#'+startTimeDate).children().first().append(eventEl)
-                for (x = 0; x < lengthOfEventInMinutes; x++) {
-                    minuteIndex = startTimeInMinutes + x;
-                    $('#' + startTimeDate + '-' + minuteIndex).css("background-color", eventLineColor);
-                }
-            } else {
-                for (x = 0; x < 1440 - startTimeInMinutes; x++) {
-                    minuteIndex = startTimeInMinutes + x;
-                    lengthOfEventInMinutes--;
-                    $('#' + startTimeDate + '-' + minuteIndex).css("background-color", eventLineColor);
-                }
-                for (x = 0; x < lengthOfEventInMinutes; x++) {
-                    minuteIndex = 0 + x;
-                    $('#' + startTimeDate + '-' + minuteIndex).css("background-color", eventLineColor);
-                }
-            }
+
+            }// else {
+            //     for (x = 0; x < 1440 - startTimeInMinutes; x++) {
+            //         minuteIndex = startTimeInMinutes + x;
+            //         lengthOfEventInMinutes--;
+            //         $('#' + startTimeDate + '-' + minuteIndex).css("background-color", eventLineColor);
+            //     }
+            //     for (x = 0; x < lengthOfEventInMinutes; x++) {
+            //         minuteIndex = 0 + x;
+            //         $('#' + startTimeDate + '-' + minuteIndex).css("background-color", eventLineColor);
+            //     }
+            // }
         }
     }
 }
@@ -289,16 +297,16 @@ function getMoonPhase(city, date) {
           }
         }
         var dayEl = $('<div>');
-        dayEl.css({"height":"360px", "background-color":"rgba(242, 242, 242, " + phasePercentages[i]/2 + ")"});
-
+        dayEl.css({"height":"360px", "position":"relative", "background-color":"rgba(242, 242, 242, " + phasePercentages[i]/2 + ")"});
+        dayEl.addClass('day-spot');
         for (x = 0; x < 24; x++) {
             var hourEl = $('<div>');
             hourEl.attr("id", dayjs(dateIndex).format("YYYY-MM-DD-") + x);
-            if (x == 0){
-                hourEl.css({"height":"2px", "margin":"13px 0px"});
-            } else {
-                hourEl.css({"height":"2px", "background-color":"#000", "margin":"13px 0px"});
+            hourEl.css({"height":"2px", "margin":"13px 0px"});
+            if (x != 0){
+                hourEl.css({"background-color":"#000",});
             }
+                        
             dayEl.append(hourEl);
         } 
         $('#' + dayjs(dateIndex).format("YYYY-MM-DD")).append(dayEl);
