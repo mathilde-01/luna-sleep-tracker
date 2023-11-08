@@ -33,10 +33,11 @@
 
                 <!-- Mini Calendar Section-->
                 <div class="column" id="right-side">
-                    <div class="content is-normal is-flex-touch is-flex-desktop-only is-justify-content-center">
-                        <input type="date" color="black" data-display-mode="inline" data-is-range="true"
-                            data-close-on-select="false">
+                    <div data-calendar="true" class="content is-normal is-flex-touch is-flex-desktop-only is-justify-content-center">
+                        <input id="calendar" type="date" color="black" data-display-mode="inline" data-is-range="true"
+                            data-close-on-select="false" onclick="removeHandler()" value="remove">
                     </div>
+                    <div class="invisible-disable"></div>
                     <div class="content is-flex-touch is-flex-desktop-only is-flex-direction-column">
                         <button class="button" onclick="openForm('schedule-form')">Update Schedule</button>
                         <button class="button" onclick="openForm('sleep-form')">Enter Sleep Hours</button>

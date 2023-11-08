@@ -92,6 +92,23 @@ h4{
     color: red;
 }
 
+/* invisible div */
+.invisible-disable {
+    background-color:transparent;
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+
+#right-side {
+    position: relative;
+}
+
+
 /* calendar styling */
 .datetimepicker-header.is-date-only {
     display: none;
@@ -102,8 +119,49 @@ h4{
 }
 
 .datetimepicker.is-primary .datepicker-nav {
-    background: #26262c!important;
+    background: #1b1b22!important;
     color: #fff;
+}
+
+.datepicker-body {
+    background-color: #1b1b22!important;
+}
+
+.datepicker-date {
+    background-color: #26262c!important;
+}
+
+.datepicker-date.is-current-month {
+    background-color: #1b1b22!important;
+}
+
+.datepicker-date.is-current-month.datepicker-range {
+    background-color: #5d37a4!important;
+}
+
+.datepicker-nav-previous {
+    display: none;
+}
+
+.datepicker-nav-next {
+    display: none;
+}
+
+.datepicker-nav{
+    justify-content: center!important;
+}
+
+.datepicker-nav-month-year{
+    font-family: 'Poiret One', sans-serif;
+}
+
+.datepicker-nav-month{
+    font-family: 'Poiret One', sans-serif;
+    font-weight: 700;
+}
+
+.date-item {
+    color: #f2f2f2!important;
 }
 
 .datepicker-body .datepicker-dates .datepicker-days .datepicker-date.date-item {
