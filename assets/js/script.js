@@ -209,8 +209,8 @@ function printSchedule() {
 
 // get the moon phase using city name and time
 function getMoonPhase(city, date) {
-  var dateRangeMin = dayjs(date).subtract(3, "day").format("YYYY-MM-DD");
-  var dateRangeMax = dayjs(date).add(3, "day").format("YYYY-MM-DD");
+  var dateRangeMin = dayjs(date).subtract(2, "day").format("YYYY-MM-DD");
+  var dateRangeMax = dayjs(date).add(4, "day").format("YYYY-MM-DD");
 
   fetch(
     "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" +
