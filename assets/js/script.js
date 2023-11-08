@@ -6,8 +6,8 @@ var phasePercentages = [];
 // Initialize all input of type date
 var calendars = bulmaCalendar.attach('[type="date"]', {
   datePicker: "inline",
-  startDate: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3),
-  endDate: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 3),
+  startDate: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2),
+  endDate: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 4),
 });
 
 const moonImages = {
@@ -81,27 +81,34 @@ function closeForm(formId) {
         var endEventTime = endEventTimeElement.val();
 
 
-
+        var failed = false;
         if (eventType === "Select") {
             //alert("Please select an option before submitting.");
             eventTypeElement.addClass('error');
+            failed = true;
         } else {
             eventTypeElement.removeClass('error');
         }
         if (dayInput   === "") {
             dayInputElement.addClass('error');
+            failed = true;
         } else {
             dayInputElement.removeClass('error');
         }
         if (beginEventTime   === "") {
             beginEventTimeElement.addClass('error');
+            failed = true;
         } else {
             beginEventTimeElement.removeClass('error');
         }
         if (endEventTime   === "") {
             endEventTimeElement.addClass('error');
+            failed = true;
         } else {
             endEventTimeElement.removeClass('error');
+        }
+        if (!failed) {
+            closeForm(formId);
         }
 
   /* Create new div element to display submitted info in column */
@@ -156,7 +163,7 @@ function updateDayTitles(selectedDate) {
         dayTitlesContainer.html("");
   
         // Calculate and set the day titles
-        for (let i = -3; i <= 3; i++) {
+        for (let i = -2; i <= 4; i++) {
             var day = selectedDate.add(i, "day");
             var columnEl = $('<div>');
             var dayOfWeek = $('<h4>');
@@ -179,28 +186,29 @@ function updateDayTitles(selectedDate) {
 function printSchedule() {
     if (eventList) {
         for (i = 0; i < eventList.length; i++) {
-            var startTimeDate = eventList[i].startHours.slice(0, 10);
             var lengthOfEventInMinutes = eventList[i].length;
-            var endTimeDate = eventList[i].endHours.slice(0, 10);
-            var startTime = eventList[i].startHours.slice(11);
-            var endTime = eventList[i].endHours.slice(11);
-            var startTimeInMinutes = (parseInt(startTime.slice(0,2))) * 60 + parseInt(startTime.slice(3));
-    
-            
+            var startTimeDate = dayjs(eventList[i].startHours).format('YYYY-MM-DD');
+            var endTimeDate = dayjs(eventList[i].endHours).format('YYYY-MM-DD');
+            var startTimeInMinutes = (parseInt(dayjs(eventList[i].startHours).format('HH'))) * 60 + parseInt(dayjs(eventList[i].startHours).format('mm'));
+            var endTimeInMinutes = (parseInt(dayjs(eventList[i].endHours).format('HH'))) * 60 + parseInt(dayjs(eventList[i].endHours).format('mm'));
+            $('#'+startTimeDate)
+            // startTimeInMinutes / 4 px
+            // lengthOfEventInMinutes / 4 px
             if (startTimeDate === endTimeDate) {
+                //$('#'+startTimeDate).children().first().append(eventEl)
                 for (x = 0; x < lengthOfEventInMinutes; x++) {
                     minuteIndex = startTimeInMinutes + x;
-                    $('#' + startTimeDate + '-' + minuteIndex).css("background-color", "var(--accent)");
+                    $('#' + startTimeDate + '-' + minuteIndex).css("background-color", eventLineColor);
                 }
             } else {
                 for (x = 0; x < 1440 - startTimeInMinutes; x++) {
                     minuteIndex = startTimeInMinutes + x;
                     lengthOfEventInMinutes--;
-                    $('#' + startTimeDate + '-' + minuteIndex).css("background-color", "var(--accent)");
+                    $('#' + startTimeDate + '-' + minuteIndex).css("background-color", eventLineColor);
                 }
                 for (x = 0; x < lengthOfEventInMinutes; x++) {
                     minuteIndex = 0 + x;
-                    $('#' + endTimeDate + '-' + minuteIndex).css("background-color", "var(--accent)");
+                    $('#' + startTimeDate + '-' + minuteIndex).css("background-color", eventLineColor);
                 }
             }
         }
@@ -209,8 +217,8 @@ function printSchedule() {
 
 // get the moon phase using city name and time
 function getMoonPhase(city, date) {
-  var dateRangeMin = dayjs(date).subtract(3, "day").format("YYYY-MM-DD");
-  var dateRangeMax = dayjs(date).add(3, "day").format("YYYY-MM-DD");
+  var dateRangeMin = dayjs(date).subtract(2, "day").format("YYYY-MM-DD");
+  var dateRangeMax = dayjs(date).add(4, "day").format("YYYY-MM-DD");
 
   fetch(
     "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" +
@@ -264,14 +272,20 @@ function getMoonPhase(city, date) {
             $("#info-text").append(" Close your blinds tonight!");
           }
         }
-        
-        for (x = 0; x < 1440; x++) {
-            var minutesEl = $('<div>');
-            minutesEl.attr("id", dayjs(dateIndex).format("YYYY-MM-DD-") + x);
-            minutesEl.css({"height":"0.25px", "background-color":"rgba(242, 242, 242, " + phasePercentages[i]/2 + ")"});
-  
-            $('#' + dayjs(dateIndex).format("YYYY-MM-DD")).append(minutesEl);
-        }
+        var dayEl = $('<div>');
+        dayEl.css({"height":"360px", "background-color":"rgba(242, 242, 242, " + phasePercentages[i]/2 + ")"});
+
+        for (x = 0; x < 24; x++) {
+            var hourEl = $('<div>');
+            hourEl.attr("id", dayjs(dateIndex).format("YYYY-MM-DD-") + x);
+            if (x == 0){
+                hourEl.css({"height":"2px", "margin":"13px 0px"});
+            } else {
+                hourEl.css({"height":"2px", "background-color":"#000", "margin":"13px 0px"});
+            }
+            dayEl.append(hourEl);
+        } 
+        $('#' + dayjs(dateIndex).format("YYYY-MM-DD")).append(dayEl);
     }
     printSchedule();    
 });
