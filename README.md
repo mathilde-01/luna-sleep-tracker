@@ -13,6 +13,13 @@ Sleep plays an integral role in everyone’s health, and many factors can impact
 * DAY.JS: Gets information about the current day  
 * Bulma Calendar: Displays a responsive calendar with the current week schedule  
 
+## Deployed Page
+<img src="/assets/images/deployed-luna.png" alt="Deployed Page" title="Deployed Page">
+
+## Forms
+<img src="/assets/images/form-1-luna.png" alt="Form 1" title="Event Form">
+<img src="/assets/images/form-2-luna.png"alt="Form 2" title="Sleep Hours Form">
+
 ## Contributors
 Diana Discher  
 Opal Snellenberger  
