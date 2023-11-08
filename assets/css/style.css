@@ -107,6 +107,23 @@ h4{
     color: red;
 }
 
+/* invisible div */
+.invisible-disable {
+    background-color:transparent;
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+
+#right-side {
+    position: relative;
+}
+
+
 /* calendar styling */
 .datetimepicker-header.is-date-only {
     display: none;
