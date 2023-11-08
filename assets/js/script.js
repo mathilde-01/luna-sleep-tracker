@@ -327,4 +327,4 @@ for (var i = 0; i < calendars.length; i++){
 
 // Initial update of day titles with the current date
 updateDayTitles(dayjs());
-getCity();
+//getCity();
