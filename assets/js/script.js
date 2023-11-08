@@ -6,8 +6,8 @@ var phasePercentages = [];
 // Initialize all input of type date
 var calendars = bulmaCalendar.attach('[type="date"]', {
   datePicker: "inline",
-  startDate: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3),
-  endDate: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 3),
+  startDate: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2),
+  endDate: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 4),
 });
 
 const moonImages = {
@@ -156,7 +156,7 @@ function updateDayTitles(selectedDate) {
         dayTitlesContainer.html("");
   
         // Calculate and set the day titles
-        for (let i = -3; i <= 3; i++) {
+        for (let i = -2; i <= 4; i++) {
             var day = selectedDate.add(i, "day");
             var columnEl = $('<div>');
             var dayOfWeek = $('<h4>');
