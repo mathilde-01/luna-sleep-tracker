@@ -119,11 +119,6 @@ function closeForm(formId) {
         } else {
             endEventTimeElement.removeClass('error');
         }
-        console.log('oh no');
-        console.log('failed');
-        if (!failed) {
-            closeForm(formId);
-        }
 
   /* Create new div element to display submitted info in column */
 
@@ -172,6 +167,11 @@ function closeForm(formId) {
   // }else if(formId === 'sleep-form' && length < 60){
   //     alert(`You slept for ${lengthMinutes} minutes this day... That's not even an hour.`);
   // }
+    if (!failed) {
+        closeForm(formId);
+        printSchedule();
+    }
+
 }
 
 /* Function to update day titles to selected day*/
