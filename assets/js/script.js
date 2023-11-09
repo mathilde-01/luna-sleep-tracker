@@ -12,11 +12,11 @@ var calendars = bulmaCalendar.attach('[type="date"]', {
 
 var invisibleDisableEl = $(".invisible-disable");
 function resizeInvisibleDisable() {
-  console.log(this);
+//   console.log(this);
   invisibleDisableEl.each(function () {
-    console.log(this);
+    // console.log(this);
     var calendarEL = $(this).parent().children("[data-calendar]");
-    console.log(calendarEL);
+    // console.log(calendarEL);
     $(this).width(calendarEL.width());
     $(this).height(calendarEL.height());
   });
@@ -74,46 +74,56 @@ function closeForm(formId) {
   formPopup.classList.remove("is-active");
 }
 /* Submit form- takes in the responses and Alerts user of added event*/
-function submitForm(formId) {
-  const message = $("#message").val();
-  const formElement = $(`#${formId}`);
-  var eventTypeElement = $("#event-type");
-  var eventType = eventTypeElement.val();
-  var dayInputElement = $("#start-date");
-  var beginEventTimeElement = $("#begin-time");
-  var endEventTimeElement = $("#end-time");
-  if (formId == "sleep-form") {
-    eventType = "sleep";
-    dayInputElement = $("#sleep-date");
-    beginEventTimeElement = $("#fell-asleep");
-    endEventTimeElement = $("#woke-up");
-  }
-  var eventType = eventTypeElement.val();
-  var dayInput = dayInputElement.val();
-  var beginEventTime = beginEventTimeElement.val();
-  var endEventTime = endEventTimeElement.val();
+    function submitForm(formId) {
+        const message = $('#message').val();
+        const formElement = $(`#${formId}`);
+        var eventTypeElement = $('#event-type');
+        var eventType = eventTypeElement.val();
+        var dayInputElement = $('#start-date');
+        var beginEventTimeElement = $('#begin-time');
+        var endEventTimeElement = $('#end-time');
+        if (formId == 'sleep-form') {
+            eventType = 'sleep';
+            dayInputElement = $('#sleep-date');
+            beginEventTimeElement = $('#fell-asleep');
+            endEventTimeElement = $('#woke-up');
+        }
+        var dayInput = dayInputElement.val();
+        var beginEventTime = beginEventTimeElement.val();
+        var endEventTime = endEventTimeElement.val();
 
-  if (eventType === "Select") {
-    //alert("Please select an option before submitting.");
-    eventTypeElement.addClass("error");
-  } else {
-    eventTypeElement.removeClass("error");
-  }
-  if (dayInput === "") {
-    dayInputElement.addClass("error");
-  } else {
-    dayInputElement.removeClass("error");
-  }
-  if (beginEventTime === "") {
-    beginEventTimeElement.addClass("error");
-  } else {
-    beginEventTimeElement.removeClass("error");
-  }
-  if (endEventTime === "") {
-    endEventTimeElement.addClass("error");
-  } else {
-    endEventTimeElement.removeClass("error");
-  }
+
+        var failed = false;
+        if (eventType === "Select") {
+            //alert("Please select an option before submitting.");
+            eventTypeElement.addClass('error');
+            failed = true;
+        } else {
+            eventTypeElement.removeClass('error');
+        }
+        if (dayInput   === "") {
+            dayInputElement.addClass('error');
+            failed = true;
+        } else {
+            dayInputElement.removeClass('error');
+        }
+        if (beginEventTime   === "") {
+            beginEventTimeElement.addClass('error');
+            failed = true;
+        } else {
+            beginEventTimeElement.removeClass('error');
+        }
+        if (endEventTime   === "") {
+            endEventTimeElement.addClass('error');
+            failed = true;
+        } else {
+            endEventTimeElement.removeClass('error');
+        }
+        console.log('oh no');
+        console.log('failed');
+        if (!failed) {
+            closeForm(formId);
+        }
 
   /* Create new div element to display submitted info in column */
 
@@ -192,43 +202,43 @@ function updateDayTitles(selectedDate) {
 }
 
 function printSchedule() {
-  if (eventList) {
-    for (i = 0; i < eventList.length; i++) {
-      var startTimeDate = eventList[i].startHours.slice(0, 10);
-      var lengthOfEventInMinutes = eventList[i].length;
-      var endTimeDate = eventList[i].endHours.slice(0, 10);
-      var startTime = eventList[i].startHours.slice(11);
-      var endTime = eventList[i].endHours.slice(11);
-      var startTimeInMinutes =
-        parseInt(startTime.slice(0, 2)) * 60 + parseInt(startTime.slice(3));
+    if (eventList) {
+        for (i = 0; i < eventList.length; i++) {
+            var lengthOfEventInMinutes = eventList[i].length;
+            var startTimeDate = dayjs(eventList[i].startHour).format('YYYY-MM-DD');
+            var endTimeDate = dayjs(eventList[i].endHour).format('YYYY-MM-DD');
+            var startTimeInMinutes = (parseInt(dayjs(eventList[i].startHour).format('HH'))) * 60 + parseInt(dayjs(eventList[i].startHour).format('mm'));
+            var endTimeInMinutes = (parseInt(dayjs(eventList[i].endHour).format('HH'))) * 60 + parseInt(dayjs(eventList[i].endHour).format('mm'));
+            
+            var dayEl = $('#'+startTimeDate)
+            var eventEl = $("<div>");
+            eventEl.width(dayEl.width());
+            eventEl.css({
+                'position': 'absolute',
+                'left': '0',
+                'top': (startTimeInMinutes/4) + 'px',
+                'background-color' : 'var(--accent)'
+            })
 
-      if (startTimeDate === endTimeDate) {
-        for (x = 0; x < lengthOfEventInMinutes; x++) {
-          minuteIndex = startTimeInMinutes + x;
-          $("#" + startTimeDate + "-" + minuteIndex).css(
-            "background-color",
-            "var(--accent)"
-          );
+            if (startTimeDate === endTimeDate) {
+                eventEl.height(lengthOfEventInMinutes / 4);
+            }else {
+                eventEl.height(360 - (startTimeInMinutes/4));
+                var dayEl2 = $('#'+endTimeDate)
+                var eventEl2 = $("<div>");
+                eventEl2.width(dayEl2.width());
+                eventEl2.css({
+                    'position': 'absolute',
+                    'left': '0',
+                    'top': '0',
+                    'background-color' : 'var(--accent)'
+                })
+                eventEl2.height((lengthOfEventInMinutes / 4) - (360 - (startTimeInMinutes/4)));
+                $('#'+endTimeDate).children('.day-spot').append(eventEl2);
+            }
+            $('#'+startTimeDate).children('.day-spot').append(eventEl);
         }
-      } else {
-        for (x = 0; x < 1440 - startTimeInMinutes; x++) {
-          minuteIndex = startTimeInMinutes + x;
-          lengthOfEventInMinutes--;
-          $("#" + startTimeDate + "-" + minuteIndex).css(
-            "background-color",
-            "var(--accent)"
-          );
-        }
-        for (x = 0; x < lengthOfEventInMinutes; x++) {
-          minuteIndex = 0 + x;
-          $("#" + endTimeDate + "-" + minuteIndex).css(
-            "background-color",
-            "var(--accent)"
-          );
-        }
-      }
     }
-  }
 }
 
 // get the moon phase using city name and time
@@ -287,21 +297,23 @@ function getMoonPhase(city, date) {
             $("#info-text").append(" Close your blinds tonight!");
           }
         }
-
-        for (x = 0; x < 1440; x++) {
-          var minutesEl = $("<div>");
-          minutesEl.attr("id", dayjs(dateIndex).format("YYYY-MM-DD-") + x);
-          minutesEl.css({
-            height: "0.25px",
-            "background-color":
-              "rgba(242, 242, 242, " + phasePercentages[i] / 2 + ")",
-          });
-
-          $("#" + dayjs(dateIndex).format("YYYY-MM-DD")).append(minutesEl);
-        }
-      }
-      printSchedule();
-    });
+        var dayEl = $('<div>');
+        dayEl.css({"height":"360px", "position":"relative", "background-color":"rgba(242, 242, 242, " + phasePercentages[i]/2 + ")"});
+        dayEl.addClass('day-spot');
+        for (x = 0; x < 24; x++) {
+            var hourEl = $('<div>');
+            hourEl.attr("id", dayjs(dateIndex).format("YYYY-MM-DD-") + x);
+            hourEl.css({"height":"2px", "margin":"13px 0px"});
+            if (x != 0){
+                hourEl.css({"background-color":"#000",});
+            }
+                        
+            dayEl.append(hourEl);
+        } 
+        $('#' + dayjs(dateIndex).format("YYYY-MM-DD")).append(dayEl);
+    }
+    printSchedule();    
+});
 }
 
 // get user city from ip address
