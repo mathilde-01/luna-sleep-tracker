@@ -38,6 +38,9 @@ h4{
 
 .button {
     background-color: var(--primary);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14.75px;
+    font-weight: 600;
     border: none;
     margin-bottom: 10px;
     color: var(--text)
@@ -149,6 +152,7 @@ h4{
 
 .datepicker-nav{
     justify-content: center!important;
+    border-bottom: var(--accent) solid 1px;
 }
 
 .datepicker-nav-month-year{

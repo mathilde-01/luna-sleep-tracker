@@ -209,6 +209,7 @@ function printSchedule() {
             var endTimeDate = dayjs(eventList[i].endHour).format('YYYY-MM-DD');
             var startTimeInMinutes = (parseInt(dayjs(eventList[i].startHour).format('HH'))) * 60 + parseInt(dayjs(eventList[i].startHour).format('mm'));
             var endTimeInMinutes = (parseInt(dayjs(eventList[i].endHour).format('HH'))) * 60 + parseInt(dayjs(eventList[i].endHour).format('mm'));
+            var eventType = eventList[i].type;
             
             var dayEl = $('#'+startTimeDate)
             var eventEl = $("<div>");
@@ -224,9 +225,10 @@ function printSchedule() {
                 eventEl.height(lengthOfEventInMinutes / 4);
             }else {
                 eventEl.height(360 - (startTimeInMinutes/4));
-                var dayEl2 = $('#'+endTimeDate)
+                var dayEl2 = $('#'+endTimeDate);
                 var eventEl2 = $("<div>");
                 eventEl2.width(dayEl2.width());
+                
                 eventEl2.css({
                     'position': 'absolute',
                     'left': '0',
