@@ -12,11 +12,11 @@ var calendars = bulmaCalendar.attach('[type="date"]', {
 
 var invisibleDisableEl = $(".invisible-disable");
 function resizeInvisibleDisable() {
-  console.log(this);
+//   console.log(this);
   invisibleDisableEl.each(function () {
-    console.log(this);
+    // console.log(this);
     var calendarEL = $(this).parent().children("[data-calendar]");
-    console.log(calendarEL);
+    // console.log(calendarEL);
     $(this).width(calendarEL.width());
     $(this).height(calendarEL.height());
   });
@@ -88,7 +88,6 @@ function closeForm(formId) {
             beginEventTimeElement = $('#fell-asleep');
             endEventTimeElement = $('#woke-up');
         }
-        var eventType = eventTypeElement.val();
         var dayInput = dayInputElement.val();
         var beginEventTime = beginEventTimeElement.val();
         var endEventTime = endEventTimeElement.val();
@@ -120,6 +119,8 @@ function closeForm(formId) {
         } else {
             endEventTimeElement.removeClass('error');
         }
+        console.log('oh no');
+        console.log('failed');
         if (!failed) {
             closeForm(formId);
         }
@@ -204,38 +205,38 @@ function printSchedule() {
     if (eventList) {
         for (i = 0; i < eventList.length; i++) {
             var lengthOfEventInMinutes = eventList[i].length;
-            var startTimeDate = dayjs(eventList[i].startHours).format('YYYY-MM-DD');
-            var endTimeDate = dayjs(eventList[i].endHours).format('YYYY-MM-DD');
-            var startTimeInMinutes = (parseInt(dayjs(eventList[i].startHours).format('HH'))) * 60 + parseInt(dayjs(eventList[i].startHours).format('mm'));
-            var endTimeInMinutes = (parseInt(dayjs(eventList[i].endHours).format('HH'))) * 60 + parseInt(dayjs(eventList[i].endHours).format('mm'));
+            var startTimeDate = dayjs(eventList[i].startHour).format('YYYY-MM-DD');
+            var endTimeDate = dayjs(eventList[i].endHour).format('YYYY-MM-DD');
+            var startTimeInMinutes = (parseInt(dayjs(eventList[i].startHour).format('HH'))) * 60 + parseInt(dayjs(eventList[i].startHour).format('mm'));
+            var endTimeInMinutes = (parseInt(dayjs(eventList[i].endHour).format('HH'))) * 60 + parseInt(dayjs(eventList[i].endHour).format('mm'));
             
             var dayEl = $('#'+startTimeDate)
             var eventEl = $("<div>");
             eventEl.width(dayEl.width());
-            eventEl.height(lengthOfEventInMinutes / 4);
             eventEl.css({
                 'position': 'absolute',
                 'left': '0',
                 'top': (startTimeInMinutes/4) + 'px',
                 'background-color' : 'var(--accent)'
             })
-            $('#'+startTimeDate).children('.day-spot').append(eventEl);
 
-            // startTimeInMinutes / 4 px
-            // lengthOfEventInMinutes / 4 px
             if (startTimeDate === endTimeDate) {
-
-            }// else {
-            //     for (x = 0; x < 1440 - startTimeInMinutes; x++) {
-            //         minuteIndex = startTimeInMinutes + x;
-            //         lengthOfEventInMinutes--;
-            //         $('#' + startTimeDate + '-' + minuteIndex).css("background-color", eventLineColor);
-            //     }
-            //     for (x = 0; x < lengthOfEventInMinutes; x++) {
-            //         minuteIndex = 0 + x;
-            //         $('#' + startTimeDate + '-' + minuteIndex).css("background-color", eventLineColor);
-            //     }
-            // }
+                eventEl.height(lengthOfEventInMinutes / 4);
+            }else {
+                eventEl.height(360 - (startTimeInMinutes/4));
+                var dayEl2 = $('#'+endTimeDate)
+                var eventEl2 = $("<div>");
+                eventEl2.width(dayEl2.width());
+                eventEl2.css({
+                    'position': 'absolute',
+                    'left': '0',
+                    'top': '0',
+                    'background-color' : 'var(--accent)'
+                })
+                eventEl2.height((lengthOfEventInMinutes / 4) - (360 - (startTimeInMinutes/4)));
+                $('#'+endTimeDate).children('.day-spot').append(eventEl2);
+            }
+            $('#'+startTimeDate).children('.day-spot').append(eventEl);
         }
     }
 }
